@@ -1,0 +1,15 @@
+export const LOGIN_FORM = 'LOGIN_FORM' //登录
+export const MENU_DATA = 'MENU_DATA' // 动态菜单
+export const OPERATION_COL = 'OPERATION_COL' //运维部门管理
+export const TEST_TABLE = 'TEST_TABLE' //检测项目
+export const TEST_PAGE_SIZE = 'TEST_PAGE_SIZE' // 检测项目分页
+export const EQU_TABLE = 'EQU_TABLE'// 设备数据
+export const EQU_PAGE_SIZE = 'EQU_PAGE_SIZE' // 设备分页
+export const USER_PAGE_SIZE = 'USER_PAGE_SIZE' // 用户分页
+export const TABLE_USER_TABLE = 'TABLE_USER_TABLE'  // 用户表格
+export const UNIT_TABLE = 'UNIT_TABLE' //检测单位
+export const UNIT_PAGE_SIZE = 'UNIT_PAGE_SIZE' //检测单位分页
+export const TECH_TABLE = 'TECH_TABLE' //工艺段
+export const TECH_PAGE_SIZE = 'TECH_PAGE_SIZE' //工艺段分页 
+export const FILE_TABLE= 'FILE_TABLE' //档案单位
+export const ADD_ASS_TABLE = 'ADD_ASS_TABLE' //迎检任务-发布信息

@@ -1,0 +1,25 @@
+/* #file .el-submenu__title {
+    font-weight: bold;
+    background-color: #5f9599;
+    background-image: linear-gradient(#70aeae, #5f9599, #70aeae);
+}
+
+#file .el-submenu__title {
+    height: 58px !important;
+    line-height: 58px !important;
+    color: #fff;
+    font-size: 16px;
+}
+
+#file .el-submenu__title:hover {
+    background: #9b9b9b;
+}
+
+#file .el-submenu .el-menu-item {
+    min-width: 150px !important;
+}
+
+#file .el-menu-item.is-active {
+    background: #9b9b9b !important;
+    color: #fff;
+} */

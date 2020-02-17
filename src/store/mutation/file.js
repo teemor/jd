@@ -1,0 +1,12 @@
+export const FILE_LIST_DATA = 'FILE_LIST_DATA' // 问题描述列表
+export const FILE_PAGE_SIZE = 'FILE_PAGE_SIZE' // 分页数据
+export const FILE_MODEIFY_MODEL = 'FILE_MODEIFY_MODEL' // 修改确认的model
+
+export const BOOK_LIST_DATA = 'BOOK_LIST_DATA'
+export const BOOK_PAGE_SIZE = 'BOOK_PAGE_SIZE'
+
+export const PLATFORM_LIST_DATA = 'PLATFORM_LIST_DATA'
+
+export const PLATFORM_REPORT_LIST_DATA = 'PLATFORM_REPORT_LIST_DATA'
+
+export const STATE_PAGE_SIZE = 'STATE_PAGE_SIZE'

@@ -1,0 +1,438 @@
+{
+    "data": [
+        {
+            "name": "首页",
+            "to": "/index"
+        },
+        {
+            "name": "环保数据显示",
+            "to": "/data"
+        },
+        {
+            "name": "环保文件管理",
+            "to": "/file"
+        },
+        {
+            "name": "环保工作管理",
+            "to": "/work"
+        },
+        {
+            "name": "工艺数据分析",
+            "to": "/nanlysis"
+        },
+        {
+            "name": "危废处置管理",
+            "to": "/hazardous"
+        },
+        {
+            "name": "扬尘监控管理",
+            "to": "/monitoring"
+        },
+        {
+            "name": "系统后台管理",
+            "to": "/system"
+        }
+    ],
+    "wastedata": [
+        {
+            "name": "转运路线",
+            "to": "/transportline"
+        },
+        {
+            "name": "危废源",
+            "children": [
+                {
+                    "name": "入库",
+                    "to": "/sourcein"
+                },
+                {
+                    "name": "出库",
+                    "to": "/sourceout"
+                },
+                {
+                    "name": "库存",
+                    "to": "/sources"
+                }
+            ]
+        },
+        {
+            "name": "危废部门",
+            "children": [
+                {
+                    "name": "产废",
+                    "to": "/prowaste"
+                },
+                {
+                    "name": "统计",
+                    "to": "/countwaste"
+                }
+            ]
+        },
+        {
+            "name": "危废库",
+            "children": [
+                {
+                    "name": "入库",
+                    "to": "/storein"
+                },
+                {
+                    "name": "出库",
+                    "to": "/storeout"
+                },
+                {
+                    "name": "库存",
+                    "to": "/stores"
+                }
+            ]
+        },
+        {
+            "name": "出厂",
+            "to": "/turnout"
+        },
+        {
+            "name": "处置",
+            "to": "/deal"
+        }
+    ],
+    "nanlysisdata": [
+        {
+            "name": "窑尾",
+            "children": [
+                {
+                    "name": "窑尾A",
+                    "to": "/KilnTailA"
+                },
+                {
+                    "name": "窑尾B",
+                    "to": "/KilnTailB"
+                },
+                {
+                    "name": "窑尾C",
+                    "to": "/KilnTailC"
+                }
+            ]
+        },
+        {
+            "name": "窑头/烘干窑",
+            "to": "/KilnHead"
+        },
+        {
+            "name": "水泥磨",
+            "children": [
+                {
+                    "name": "1#-4#",
+                    "to": "/cementA"
+                },
+                {
+                    "name": "5#-8#",
+                    "to": "/cementB"
+                }
+            ]
+        }
+    ],
+    "filedata": [
+        {
+            "name": "档案管理",
+            "to": "/ArchivesTable"
+        },
+        {
+            "name": "台账管理",
+            "to": "/ParameterTable"
+        },
+        {
+            "name": "平台上报",
+            "to": "/PlatformTable"
+        },
+        {
+            "name": "统计报表",
+            "to": "/StatisticalTable"
+        },
+        {
+            "name": "图形分析",
+            "to": "/GraphicalTable"
+        }
+    ],
+    "work": [
+        {
+            "name": "发起任务",
+            "to": "/AddAssignment"
+        },
+        {
+            "name": "待办任务",
+            "to": "/TodoAssignment"
+        },
+        {
+            "name": "已办任务",
+            "to": "/DoneAssignment"
+        },
+        {
+            "name": "任务总览",
+            "to": "/OverviewAssignment"
+        }
+    ],
+    "system":[
+        {
+            "name": "权限管理",
+            "to": "system/AuthTable"
+        },
+        {
+            "name": "部门管理",
+            "to": "system/DepartmentTable"
+        },
+        {
+            "name": "员工管理",
+            "to": "system/StaffTable"
+        },
+        {
+            "name": "设备管理",
+            "to": "system/EquipmentTable"
+        },
+        {
+            "name": "排污口管理",
+            "to": "system/DrainTable"
+        },
+        {
+            "name": "检测项目",
+            "to": "system/TestProTable"
+        },
+        {
+            "name": "工艺段",
+            "to": "system/ProcessSection"
+        },
+        {
+            "name": "监测单位",
+            "to": "system/MonitorUnit"
+        },
+        {
+            "name": "档案级别",
+            "to": "system/FileLevel"
+        }
+    ],
+    "secondatatest": [
+        {
+            "children": [
+                {
+                    "name": "大气主排口",
+                    "id": 11,
+                    "to": "data/datashow"
+                },
+                {
+                    "name": "大气无组织",
+                    "id": 12,
+                    "to": "data/inorganization"
+                }
+            ],
+            "name": "环境在线数据",
+            "id": 10
+        },
+        {
+            "children": [
+                {
+                    "name": "大气数据",
+                    "id": 21,
+                    "to": "data/AirTable"
+                },
+                {
+                    "name": "中水数据",
+                    "id": 22,
+                    "to": "data/IntermediateTable"
+                },
+                {
+                    "name": "土壤数据",
+                    "id": 23,
+                    "to": "data/SoilTable"
+                },
+                {
+                    "name": "噪声数据",
+                    "id": 24,
+                    "to": "datasiyTable"
+                },
+                {
+                    "name": "油烟数据",
+                    "id": 25,
+                    "to": "data/LampblackTable"
+                },
+                {
+                    "name": "辐射数据",
+                    "id": 26,
+                    "to": "data/RadiationTable"
+                }
+            ],
+            "name": "环境报告数据",
+            "id": 20
+        },
+        {
+            "children": [
+                {
+                    "name": "生产设备",
+                    "id": 31,
+                    "to": "data/ProductionTable"
+                },
+                {
+                    "name": "治污设备",
+                    "id": 32,
+                    "to": "data/PollutionTable"
+                }
+            ],
+            "name": "设备在线数据",
+            "id": 30
+        },
+        {
+            "children": [
+                {
+                    "name": "报警记录",
+                    "id": 41,
+                    "to": "data/WarnRecord"
+                },
+                {
+                    "name": "记录管理",
+                    "id": 42,
+                    "to": "data/DocumentProcess"
+                }
+            ],
+            "name": "数据报警管理",
+            "id": 40
+        },
+        {
+            "children": [
+                {
+                    "name": "第三方检测",
+                    "id": 51,
+                    "to": "data/ThirdTest"
+                }
+            ],
+            "name": "环境数据管理",
+            "id": 50
+        },
+        {
+            "children": [
+                {
+                    "name": "第三方运维",
+                    "id": 61,
+                    "to": "data/ThirdOperations"
+                },
+                {
+                    "name": "自行维护",
+                    "id": 62,
+                    "to": "data/SelfTable"
+                }
+            ],
+            "name": "设备数据管理",
+            "id": 60
+        }
+    ],
+    "secondata": [
+        {
+            "name": "环境在线数据",
+            "children": [
+                {
+                    "name": "大气主排口",
+                    "to": "/data/datashow"
+                },
+                {
+                    "name": "大气无组织",
+                    "to": "/data/inorganization"
+                }
+            ]
+        },
+        {
+            "name": "环境报告数据",
+            "children": [
+                {
+                    "name": "大气数据",
+                    "to": "/data/AirTable"
+                },
+                {
+                    "name": "中水数据",
+                    "to": "/data/IntermediateTable"
+                },
+                {
+                    "name": "土壤数据",
+                    "to": "/data/SoilTable"
+                },
+                {
+                    "name": "噪声数据",
+                    "to": "/data/NosiyTable"
+                },
+                {
+                    "name": "油烟数据",
+                    "to": "/data/LampblackTable"
+                },
+                {
+                    "name": "辐射数据",
+                    "to": "/data/RadiationTable"
+                }
+            ]
+        },
+        {
+            "name": "设备在线数据",
+            "children": [
+                {
+                    "name": "生产设备",
+                    "to": "/data/ProductionTable"
+                },
+                {
+                    "name": "治污设备",
+                    "to": "/data/PollutionTable"
+                }
+            ]
+        },
+        {
+            "name": "数据报警管理",
+            "children": [
+                {
+                    "name": "报警记录",
+                    "to": "/data/WarnRecord"
+                },
+                {
+                    "name": "记录管理",
+                    "to": "/data/DocumentProcess"
+                }
+            ]
+        },
+        {
+            "name": "环境数据管理",
+            "children": [
+                {
+                    "name": "第三方检测",
+                    "to": "/data/ThirdTest"
+                }
+            ]
+        },
+        {
+            "name": "设备数据管理",
+            "children": [
+                {
+                    "name": "第三方运维",
+                    "to": "/data/ThirdOperations"
+                },
+                {
+                    "name": "自行维护",
+                    "to": "/data/SelfTable"
+                }
+            ]
+        }
+    ],
+    "colData": [
+        {
+            "prop": "serial_num",
+            "label": "序号"
+        },
+        {
+            "prop": "name",
+            "label": "单位名称"
+        },
+        {
+            "prop": "tel",
+            "label": "联系电话"
+        },
+        {
+            "prop": "person",
+            "label": "联系人"
+        },
+        {
+            "prop": "test_type",
+            "label": "检测类型"
+        }
+    ]
+}

@@ -1,0 +1,173 @@
+{
+    "data": [
+        {
+            "name": "首页",
+            "id": 1,
+            "to": "index",
+            "children": [
+                {
+                    "children": [
+                        {
+                            "name": "大气主排口",
+                            "id": 11,
+                            "to": "data/datashow"
+                        },
+                        {
+                            "name": "大气无组织",
+                            "id": 12,
+                            "to": "data/inorganization"
+                        }
+                    ],
+                    "name": "环境在线数据",
+                    "id": 10
+                },
+                {
+                    "children": [
+                        {
+                            "name": "大气主排口",
+                            "id": 11,
+                            "to": "data/datashow"
+                        },
+                        {
+                            "name": "大气无组织",
+                            "id": 12,
+                            "to": "data/inorganization"
+                        }
+                    ],
+                    "name": "环境在线数据",
+                    "id": 10
+                },
+                {
+                    "children": [
+                        {
+                            "name": "大气数据",
+                            "id": 21,
+                            "to": "data/AirTable"
+                        },
+                        {
+                            "name": "中水数据",
+                            "id": 22,
+                            "to": "data/IntermediateTable"
+                        },
+                        {
+                            "name": "土壤数据",
+                            "id": 23,
+                            "to": "data/SoilTable"
+                        },
+                        {
+                            "name": "噪声数据",
+                            "id": 24,
+                            "to": "datasiyTable"
+                        },
+                        {
+                            "name": "油烟数据",
+                            "id": 25,
+                            "to": "data/LampblackTable"
+                        },
+                        {
+                            "name": "辐射数据",
+                            "id": 26,
+                            "to": "data/RadiationTable"
+                        }
+                    ],
+                    "name": "环境报告数据",
+                    "id": 20
+                },
+                {
+                    "children": [
+                        {
+                            "name": "生产设备",
+                            "id": 31,
+                            "to": "data/ProductionTable"
+                        },
+                        {
+                            "name": "治污设备",
+                            "id": 32,
+                            "to": "data/PollutionTable"
+                        }
+                    ],
+                    "name": "设备在线数据",
+                    "id": 30
+                },
+                {
+                    "children": [
+                        {
+                            "name": "报警记录",
+                            "id": 41,
+                            "to": "data/WarnRecord"
+                        },
+                        {
+                            "name": "记录管理",
+                            "id": 42,
+                            "to": "data/DocumentProcess"
+                        }
+                    ],
+                    "name": "数据报警管理",
+                    "id": 40
+                },
+                {
+                    "children": [
+                        {
+                            "name": "第三方检测",
+                            "id": 51,
+                            "to": "data/ThirdTest"
+                        }
+                    ],
+                    "name": "环境数据管理",
+                    "id": 50
+                },
+                {
+                    "children": [
+                        {
+                            "name": "第三方运维",
+                            "id": 61,
+                            "to": "data/ThirdOperations"
+                        },
+                        {
+                            "name": "自行维护",
+                            "id": 62,
+                            "to": "data/SelfTable"
+                        }
+                    ],
+                    "name": "设备数据管理",
+                    "id": 60
+                }
+            ]
+        },
+        {
+            "name": "环保数据显示",
+            "id": 2,
+            "to": "data"
+        },
+        {
+            "name": "环保文件管理",
+            "id": 3,
+            "to": "file"
+        },
+        {
+            "name": "环保工作管理",
+            "id": 4,
+            "to": "work"
+        },
+        {
+            "name": "工艺数据分析",
+            "id": 5,
+            "to": "nanlysis"
+        },
+        {
+            "name": "危废处置管理",
+            "id": 6,
+            "to": "hazardous"
+        },
+        {
+            "name": "扬尘监控管理",
+            "id": 7,
+            "to": "monitoring"
+        },
+        {
+            "name": "系统后台管理",
+            "id": 8,
+            "to": "system"
+        }
+    ]
+}

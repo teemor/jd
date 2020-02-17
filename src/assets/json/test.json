@@ -1,0 +1,47 @@
+{
+  "totalItem": [
+    11
+  ],
+  "tableData": [
+    {
+      "id": 6,
+      "num": "5",
+      "name": "5",
+      "data_num": "5",
+      "standard": "5",
+      "state": "启用"
+    },
+    {
+      "id": 7,
+      "num": "6",
+      "name": "6",
+      "data_num": "6",
+      "standard": "6",
+      "state": "启用"
+    },
+    {
+      "id": 8,
+      "num": "8",
+      "name": "8",
+      "data_num": "8",
+      "standard": "8",
+      "state": "停用"
+    },
+    {
+      "id": 9,
+      "num": "9",
+      "name": "9",
+      "data_num": "9",
+      "standard": "9",
+      "state": "启用"
+    },
+    {
+      "id": 10,
+      "num": "1",
+      "name": "test",
+      "data_num": "111",
+      "standard": "111",
+      "state": "启用"
+    }
+  ]
+}
