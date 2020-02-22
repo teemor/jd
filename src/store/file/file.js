@@ -54,18 +54,18 @@ const state = {
     addState: true,//是否添加
     editdisabled: true,
     modifyModel: {
-        name:'',
-        spid:'',
-        abbreviation:'',
-        edition:'',
-        position:'',
-        number:'',
-        person:'',
-        device:'',
-        sewage:'',
-        experienced:'',
-        establish:'',
-        modify:'',
+        name: '',
+        spid: '',
+        abbreviation: '',
+        edition: '',
+        position: '',
+        number: '',
+        person: '',
+        device: '',
+        sewage: '',
+        experienced: '',
+        establish: '',
+        modify: '',
     },
 }
 
@@ -119,6 +119,7 @@ const mutations = {
 
 }
 const getters = {
+    url: () => request.url,
     editdisabled: state => state.editdisabled,//编辑禁用
     modifyModel: state => state.modifyModel, // 修改文件model
     uploadData: state => state.uploadData, // 上传需要的id

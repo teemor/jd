@@ -35,7 +35,7 @@
           </div>
         </div>
         <el-button
-          style="margin-top: 12px;"
+          style="margin-top: 12px;"    
           @click="next"
           :disabled="disabled"
         >{{active==2?'完成':'下一步'}}</el-button>

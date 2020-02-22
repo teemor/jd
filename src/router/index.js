@@ -159,6 +159,10 @@ export default new Router({
           component: WorkMenu,
           children: [
             {
+              path: '',
+              redirect: 'welPublish' //发布信息
+            },
+            {
               path: 'welPublish',
               component: () => import('@/components/work/welAssignment/AddAssignment') //发布信息
             },

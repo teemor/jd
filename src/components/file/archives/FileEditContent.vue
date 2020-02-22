@@ -15,7 +15,7 @@
       <el-upload
         class="upload-demo"
         ref="upload"
-        action="http://yz.c.ic.ci/jdem/jdTesting/featurelib/import"
+        :action="url"
         :on-preview="handlePreview"
         :on-success="handleSuccess"
         :on-remove="handleRemove"
@@ -60,7 +60,8 @@ export default {
       modifyModel: "modifyModel",
       uploadData: "uploadData",
       updisabled: "updisabled",
-      spid: "spid"
+      spid: "spid",
+      url:'url'
     })
   },
   mounted() {
@@ -91,8 +92,6 @@ export default {
     },
     // 新增
     addFile() {
-
-      
       this.$emit("add");
       this.$store.commit("file/addState", { state: true });
       this.$store.commit("file/updisabled", true);

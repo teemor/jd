@@ -1,5 +1,7 @@
 import axios from '@/assets/util/axios'
+import api from '@/jsapi'
 export default {
+    url:`${api.uploadUrl}`,
     // 文档字典用户
     selectAll: function () {
         return axios.get(`/archives/selectAll`)

@@ -4,11 +4,15 @@
       <el-menu router :default-active="$route.path">
         <el-submenu v-for="(items,index) in mymenu" :key="index" :index="index.toString()">
           <template slot="title">
-            <span>{{items.label}}</span>  
+            <span>{{items.label}}</span>
           </template>
-          <el-menu-item :index="'/'+menu.to" v-for="menu in items.children" :key="menu.id">{{menu.label}}</el-menu-item>
+          <el-menu-item
+            :index="'/'+menu.to"
+            v-for="menu in items.children"
+            :key="menu.id"
+          >{{menu.label}}</el-menu-item>
         </el-submenu>
-      </el-menu> 
+      </el-menu>
     </div>
     <div class="box fl">
       <div class="contain">
@@ -22,7 +26,7 @@ import request from "@/api/system/system";
 export default {
   data() {
     return {
-      mymenu:[]
+      mymenu: []
     };
   },
   mounted() {
@@ -33,5 +37,4 @@ export default {
 };
 </script>
 <style>
-
 </style>

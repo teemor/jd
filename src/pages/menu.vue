@@ -115,7 +115,7 @@ export default {
 }
 #app {
   /* min-width: 1800px; */
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Adrial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
