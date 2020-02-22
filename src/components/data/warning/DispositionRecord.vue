@@ -13,8 +13,8 @@
         <el-form-item label="编号" prop='num'>
           <el-input size="mini" v-model="formInline.num" placeholder="编号"></el-input>
         </el-form-item>
-        <el-form-item label="类型" prop='type'>
-          <el-input size="mini" v-model="formInline.type" placeholder="类型"></el-input>
+        <el-form-item label="报警类型" prop='type'>
+          <el-input size="mini" v-model="formInline.type" placeholder="报警类型"></el-input>
         </el-form-item>
         <el-form-item label="处理人" prop='handler'>
           <el-input size="mini" v-model="formInline.handler" placeholder="处理人"></el-input>
