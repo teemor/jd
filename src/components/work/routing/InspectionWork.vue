@@ -15,7 +15,7 @@
         <el-form-item label="科室">
           <el-cascader
             :options="options"
-            :props="{ emitPath: true, checkStrictly: true, label: 'name', key: 'id' }"
+            :props="{ emitPath: false, checkStrictly: true, label: 'name', key: 'id',value: 'name' }"
             size="mini"
             ref="searchcascader"
             placeholder="请选择科室"
@@ -543,7 +543,11 @@ export default {
         this.formInline.dp = res.data.name;
       })
       request.searchIns(this.formInline).then(res => {
-         this.tableData.tableData = res.data.data;
+        if(res.data.data === '无任务') {
+          this.$commonUtils.setMessage("warning", "无符合条件结果");
+        } else {
+          this.tableData.tableData = res.data.data;
+        }
       })
     },
     // 新增巡检任务
