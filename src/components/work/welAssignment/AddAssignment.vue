@@ -86,8 +86,7 @@
           <el-table-column prop="receivePerson" label="接收人" align="center">
             <template slot-scope="scope">
               <el-checkbox-group v-model="scope.row.receive">
-                <!-- <el-checkbox v-for="item in scope.row.person" :label="item" :key="item.id">{{ item.name }}</el-checkbox> -->
-                <el-checkbox v-for="item in scope.row.person" :label="item.id" :key="item.id">{{ item.name }}</el-checkbox>
+                <el-checkbox v-for="item in scope.row.person" :label="item" :key="item.id">{{ item.name }}</el-checkbox>
               </el-checkbox-group>
             </template>
           </el-table-column>
@@ -135,12 +134,12 @@
         </el-form-item>
         <el-table :data="assi_form.dpTable" class="dp-table">
           <el-table-column prop="receiveDp" label="接收部门" align="center" width="150px"></el-table-column>
-          <el-table-column prop="receivePerson" label="接收人" align="center"></el-table-column>
+          <el-table-column prop="receiveName" label="接收人" align="center"></el-table-column>
           <el-table-column prop="list" label="工作清单" align="center"></el-table-column>
         </el-table>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="detailDialog= false">关 闭</el-button>
+        <el-button type="primary" @click="detailDialog = false">关 闭</el-button>
       </div>
     </el-dialog>
   </div>
@@ -243,18 +242,17 @@ export default {
     addSaveAss() {
       this.table.map((res) => {
         // 新增一个receiveName展示接收人名称
-        // let receivePerson = [];
-        // let receiveName = [];
-        // res.receive.map((data) => {
-        //   receivePerson.push(data.id);
-        //   receiveName.push(data.name)
-        // })
+        let receivePerson = [];
+        let receiveName = [];
+        res.receive.map((data) => {
+          receivePerson.push(data.id);
+          receiveName.push(data.name)
+        })
         this.add_assi_form.dpTable.push({
           receiveDp: res.receiveDp,
           receiveState: "未接收",
-          receivePerson: res.receive.join(','),
-          // receivePerson: receivePerson.join(','),
-          // receiveName: receiveName.join(','),
+          receivePerson: receivePerson.join(','),
+          receiveName: receiveName.join(','),
           list: res.list,
           dpId: res.dpId.toString()
         }); 

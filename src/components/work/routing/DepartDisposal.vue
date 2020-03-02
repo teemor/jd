@@ -71,14 +71,14 @@
         </el-form-item>
         <el-table :data="insForm.failTable" v-if="insForm.rewards == '惩罚'">
           <el-table-column prop="reformDp" label="整改部门" align="center" width="150px"></el-table-column>
-          <el-table-column prop="reformPerson" label="接收人" align="center"></el-table-column>
+          <el-table-column prop="reformName" label="接收人" align="center"></el-table-column>
           <el-table-column prop="reformContent" label="不合格内容" align="center"></el-table-column>
           <el-table-column prop="figure" label="金额" align="center"></el-table-column>
           <el-table-column prop="reformTime" label="整改时效" align="center"></el-table-column>
         </el-table>
         <el-table :data="insForm.rewardTable" v-if="insForm.rewards == '奖励'">
           <el-table-column prop="rewardDp" label="奖励部门" align="center" width="150px"></el-table-column>
-          <el-table-column prop="rewardPerson" label="接收人" align="center"></el-table-column>
+          <el-table-column prop="rewardName" label="接收人" align="center"></el-table-column>
           <el-table-column prop="rewardFigure" label="金额" align="center"></el-table-column>
         </el-table>
       </el-form>
@@ -242,13 +242,15 @@ export default {
       this.insForm.rewardTable = data.rewardTable;
       this.insForm.rewards = data.rewards;
       this.insForm.attachment = [];
-      data.attachment.split(',').map((res) => {
-        const index = res.replace(/\\/g,"/").lastIndexOf('\/');
-        this.insForm.attachment.push({
-          name: res.substring(index+1, res.length),
-          url: res
-        }) 
-      })
+      if(data.attachment !== null && data.attachment !== "") {
+        data.attachment.split(',').map((res) => {
+          const index = res.replace(/\\/g,"/").lastIndexOf('\/');
+          this.insForm.attachment.push({
+            name: res.substring(index+1, res.length),
+            url: res
+          }) 
+        })
+      }
       let insdp = [];
       data.insDp.map((res) => {
         insdp.push(res.dp);
@@ -262,7 +264,7 @@ export default {
       this.disForm.disIntroduction = data.failTable[0].disIntroduction;
       this.disForm.taskId = data.taskId;
       // 处理文件链接
-      if(data.failTable[0].disAttachment !== null) {
+      if(data.failTable[0].disAttachment !== null && data.failTable[0].disAttachment !== "") {
         let a = (data.failTable[0].disAttachment).split(',');  
         if(a.length > 0) {
           a.forEach(item => {
