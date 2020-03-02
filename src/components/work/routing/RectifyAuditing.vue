@@ -56,14 +56,14 @@
         </el-form-item>
         <el-table :data="insForm.failTable">
           <el-table-column prop="reformDp" label="整改部门" align="center" width="150px"></el-table-column>
-          <el-table-column prop="reformPerson" label="接收人" align="center"></el-table-column>
+          <el-table-column prop="reformName" label="接收人" align="center"></el-table-column>
           <el-table-column prop="reformContent" label="不合格内容" align="center"></el-table-column>
           <el-table-column prop="figure" label="金额" align="center"></el-table-column>
           <el-table-column prop="reformTime" label="整改时效" align="center"></el-table-column>
         </el-table>
         <el-table :data="insForm.rewardTable">
           <el-table-column prop="rewardDp" label="奖励部门" align="center" width="150px"></el-table-column>
-          <el-table-column prop="rewardPerson" label="接收人" align="center"></el-table-column>
+          <el-table-column prop="rewardName" label="接收人" align="center"></el-table-column>
           <el-table-column prop="rewardFigure" label="金额" align="center"></el-table-column>
         </el-table>
       </el-form>
@@ -164,13 +164,15 @@ export default {
       this.insForm.failTable = data.failTable,
       this.insForm.rewardTable = data.rewardTable;
       this.insForm.attachment = [];
-      data.attachment.split(',').map((res) => {
-        const index = res.replace(/\\/g,"/").lastIndexOf('\/');
-        this.insForm.attachment.push({
-          name: res.substring(index+1, res.length),
-          url: res
-        }) 
-      })
+      if(data.attachment !== "" && data.attachment !== null) {
+        data.attachment.split(',').map((res) => {
+          const index = res.replace(/\\/g,"/").lastIndexOf('\/');
+          this.insForm.attachment.push({
+            name: res.substring(index+1, res.length),
+            url: res
+          }) 
+        })
+      }
       let insdp = [];
       data.insDp.map((res) => {
         insdp.push(res.label);
@@ -180,19 +182,21 @@ export default {
       let Attachment = [];
       //处理文件链接
       this.auditData.map((res) => {
-        let a = res.disAttachment.split(',');  
-        let b = [];
-        if(a.length > 0) {
-          a.forEach(item => {
-            var obj = {} 
-              let index = item.replace(/\\/g,"/").lastIndexOf('\/');
-              let fileName  = item.substring(index + 1, item.length); //最后的文件名截取出来
-              this.$set(obj,'name',fileName);
-              this.$set(obj,'url',item);  //修改files里面的结构（name,url）
-              b.push(obj);
-          })
+        if(res.disAttachment !== null && res.disAttachment !== ""){
+          let a = res.disAttachment.split(',');  
+          let b = [];
+          if(a.length > 0) {
+            a.forEach(item => {
+              var obj = {} 
+                let index = item.replace(/\\/g,"/").lastIndexOf('\/');
+                let fileName  = item.substring(index + 1, item.length); //最后的文件名截取出来
+                this.$set(obj,'name',fileName);
+                this.$set(obj,'url',item);  //修改files里面的结构（name,url）
+                b.push(obj);
+            })
+          }
+          res.disAttachment = b;
         }
-        res.disAttachment = b;
       })
       this.form.taskId = data.taskId;
     },

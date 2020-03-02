@@ -60,7 +60,7 @@
         </el-form-item>
         <el-table :data="assi_form.dpTable" class="dp-table">
           <el-table-column prop="receiveDp" label="接收部门" align="center" width="150px"></el-table-column>
-          <el-table-column prop="receivePerson" label="接收人" align="center"></el-table-column>
+          <el-table-column prop="receiveName" label="接收人" align="center"></el-table-column>
           <el-table-column prop="list" label="工作清单" align="center"></el-table-column>
         </el-table>
       </el-form>
@@ -100,8 +100,7 @@
             <el-table-column prop="reformPerson" label="接收人" align="left" width="200px">
               <template slot-scope="scope">
                 <el-checkbox-group v-model="scope.row.receive">
-                  <!-- <el-checkbox v-for="item in scope.row.person" :label="item" :key="item.id">{{ item.name }}</el-checkbox> -->
-                  <el-checkbox v-for="item in scope.row.person" :label="item.id" :key="item.id">{{ item.name }}</el-checkbox>
+                  <el-checkbox v-for="item in scope.row.person" :label="item" :key="item.id">{{ item.name }}</el-checkbox>
                 </el-checkbox-group>
               </template>
             </el-table-column>
@@ -251,6 +250,7 @@ export default {
     // 修改
     editResult(data) {
       console.log(data,'d')
+      this.failoptions = [];
       this.editDialog = true;
       this.assi_form.attachment = [];
       this.assi_form.id = data.id;
@@ -262,13 +262,15 @@ export default {
       this.assi_form.instruction = data.instruction;
       this.assi_form.dpTable = data.dpTable;
       this.coopData = data.dpTable; 
-      data.attachment.split(',').map((res) => {
-        const index = res.replace(/\\/g,"/").lastIndexOf('\/');
-        this.assi_form.attachment.push({
-          name: res.substring(index+1, res.length),
-          url: res
-        }) 
-      })
+      if(data.attachment !== '') {
+        data.attachment.split(',').map((res) => {
+          const index = res.replace(/\\/g,"/").lastIndexOf('\/');
+          this.assi_form.attachment.push({
+            name: res.substring(index+1, res.length),
+            url: res
+          }) 
+        })
+      }
       this.result_form.taskId = data.id;
       data.dpTable.map((res) => { 
         this.failoptions.push({
@@ -297,19 +299,18 @@ export default {
     // reformData数据放入reformTable
     setTable() {
       this.reformData.map((res) => {
-        // let reformPerson = [];
-        // let reformName = [];
-        // res.receive.map((data) => {
-        //   reformPerson.push(data.id);
-        //   reformName.push(data.name)
-        // })
+        let reformPerson = [];
+        let reformName = [];
+        res.receive.map((data) => {
+          reformPerson.push(data.id);
+          reformName.push(data.name)
+        })
         this.result_form.reformTable.push({
           reformDp: res.reformDp,
           reformContent: res.reformContent,
           effective: res.effective,
-          reformPerson: res.receive.join(','),
-          // reformPerson: reformPerson.join(','),
-          // reformName: reformName.join(',')
+          reformPerson: reformPerson.join(','),
+          reformName: reformName.join(',')
         })
       })
     },
