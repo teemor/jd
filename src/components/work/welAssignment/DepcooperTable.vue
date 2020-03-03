@@ -88,7 +88,7 @@
         </el-form-item>
         <el-table :data="assi_form.dpTable" class="dp-table">
           <el-table-column prop="receiveDp" label="接收部门" width="150px"></el-table-column>
-          <el-table-column prop="receivePerson" label="接收人"></el-table-column>
+          <el-table-column prop="receiveName" label="接收人"></el-table-column>
           <el-table-column prop="list" label="工作清单"></el-table-column>
         </el-table>
       </el-form>
@@ -203,7 +203,7 @@
         </el-form-item>
         <el-table :data="assi_form.dpTable" class="dp-table">
           <el-table-column prop="receiveDp" label="接收部门" align="center" width="150px"></el-table-column>
-          <el-table-column prop="receivePerson" label="接收人" align="center"></el-table-column>
+          <el-table-column prop="receiveName" label="接收人" align="center"></el-table-column>
           <el-table-column prop="list" label="工作清单" align="center"></el-table-column>
         </el-table>
       </el-form>
