@@ -33,7 +33,7 @@
           type="success"
           @click="submitUpload"
         >上传到服务器</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传word/pdf文件，且不超过2m</div>
+        <div slot="tip" class="el-upload__tip">只能上传word/pdf文件</div>
       </el-upload>
     </div>
   </div>
@@ -80,14 +80,14 @@ export default {
       const isJPG =
         file.type === "application/msword" || file.type === "application/pdf";
 
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      // const isLt2M = file.size / 1024 / 1024 < 2;
 
       if (!isJPG) {
         this.$message.error("上传文件只能是 doc,pdf格式!");
       }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
+      // if (!isLt2M) {
+      //   this.$message.error("上传头像图片大小不能超过 2MB!");
+      // }
       return isJPG;
     },
     // 新增

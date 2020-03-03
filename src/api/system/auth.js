@@ -1,4 +1,6 @@
 import axios from '@/assets/util/axios'
+import commonUtils from "@/assets/util/commonUtil";
+
 export default {
     // 权限字典用户
     selectAll: function () {
@@ -10,8 +12,10 @@ export default {
     },
     // 分配权限
     wholeTree: function () {
+        let userInfo = JSON.parse(commonUtils.getCookie("id"));
+        let uname = userInfo.uname;
         // return axios.get(`/server/wholeTree`)
-        return axios.get(`/wholeTree`)
+        return axios.get(`/wholeTree?user=${uname}`)
     },
     // 删除权限
     deleteAuth: function (id) {

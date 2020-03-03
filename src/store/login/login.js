@@ -40,13 +40,12 @@ const actions = {
     state,
     commit
   }) {
-
     request.login(state.loginForm).then(res => {
       if (res.data.code == -1) {
         commonUtils.setMessage('error', '登录失败')
       } else if (res.data.code === 1) {
-
-        menu.menuData().then(res => {
+        console.log(state.loginForm)
+        menu.menuData(state.loginForm.uname).then(res => {
           let path = res.data.data[0].to
           if (res.data.data[1].to = 'data') {
             router.push({
