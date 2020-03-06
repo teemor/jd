@@ -120,7 +120,7 @@ const mutations = {
 
 }
 const getters = {
-    url: () => request.url,
+    uploadUrl: () => request.uploadUrl,
     editdisabled: state => state.editdisabled,//编辑禁用
     modifyModel: state => state.modifyModel, // 修改文件model
     uploadData: state => state.uploadData, // 上传需要的id

@@ -27,7 +27,7 @@ export default {
   },
   created() {
     this.selectAll();
-    this.$store.dispatch("file/selectArchives");
+    // this.$store.dispatch("file/selectArchives");
   },
   methods: {
     handleNodeClick() {},

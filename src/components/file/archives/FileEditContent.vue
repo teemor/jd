@@ -15,7 +15,7 @@
       <el-upload
         class="upload-demo"
         ref="upload"
-        :action="url"
+        :action="uploadUrl"
         :on-preview="handlePreview"
         :on-success="handleSuccess"
         :on-remove="handleRemove"
@@ -61,7 +61,7 @@ export default {
       uploadData: "uploadData",
       updisabled: "updisabled",
       spid: "spid",
-      url:'url'
+      uploadUrl:'uploadUrl'
     })
   },
   mounted() {
@@ -110,7 +110,7 @@ export default {
     },
     handleSuccess() {
       this.$commonUtils.setMessage("success", "上传成功");
-      this.$store.dispatch("file/selectArchives", { spid: this.formData.spid });
+      this.$store.dispatch("file/selectArchives", { spid: this.spid });
     },
     handleError() {
       this.$commonUtils.setMessage("error", "上传失败");
