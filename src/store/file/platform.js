@@ -36,6 +36,7 @@ const mutations = {
         state.pageSize = pageSize
     },
     getModifyPlatformData(state, modifyModel) {
+        state.modifyModel.id = modifyModel.id
         state.modifyModel.name = modifyModel.name
         state.modifyModel.abbreviation = modifyModel.abbreviation
         state.modifyModel.boundary = modifyModel.boundary
@@ -55,6 +56,7 @@ const mutations = {
 
 }
 const getters = {
+    picUrl:state=>request.picUrl,
     modifyModel: state => state.modifyModel, // 修改文件model
     uploadData: state => state.uploadData, // 上传需要的id
     id: state => state.id,

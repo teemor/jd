@@ -58,16 +58,12 @@
             <el-form-item label="界面" prop="boundary">
               <el-upload
                 class="avatar-uploader"
-                action="http://yz.c.ic.ci/jdem/jdTesting/picture/import"
+                :action="picUrl"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload"
               >
-                <img
-                  v-if="formData.boundary"
-                  :src="formData.boundary"
-                  class="avatar"
-                />
+                <img v-if="formData.boundary" :src="formData.boundary" class="avatar" />
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
@@ -80,6 +76,7 @@
 
 <script>
 import dict from "@/api/system/dictionary";
+import api from "@/jsapi";
 import dictonary from "@/mixins/dictonary";
 import request from "@/api/file/file";
 import { createNamespacedHelpers } from "vuex";
@@ -102,6 +99,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      picUrl: "picUrl",
       modifyModel: "modifyModel",
       uploadData: "uploadData",
       updisabled: "updisabled"
@@ -115,13 +113,16 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
-      console.log(file);
-      this.formData.boundary = "http://yz.c.ic.ci/" + file.response;
+      this.formData.boundary = api.apiupload + file.response;
       this.imageUrl = URL.createObjectURL(file.raw);
       console.log(this.imageUrl);
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/png" || file.type === "image/gif"|| file.type === "image/jpg"|| file.type === "image/jpeg";
+      const isJPG =
+        file.type === "image/png" ||
+        file.type === "image/gif" ||
+        file.type === "image/jpg" ||
+        file.type === "image/jpeg";
 
       // const isLt2M = file.size / 1024 / 1024 < 2;
 
@@ -150,6 +151,7 @@ export default {
     },
     // 修改
     editPlatform() {
+      console.log(this.formData, "修改");
       this.edit = 1;
       this.add = 0;
       this.disabled = false;
