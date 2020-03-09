@@ -388,6 +388,7 @@ export default {
       this.editDialog = true;
     },
     editSaveUser() {
+      // 修改用户
       this.model.id = this.editForm.id;
       this.model.dpid = this.editForm.dpid;
       this.model.uname = this.editForm.uname;
@@ -397,7 +398,7 @@ export default {
       this.model.state = this.editForm.state;
       this.model.power = this.editForm.powerid;
       this.$refs["cascader"].getCheckedNodes().map(res => {
-        this.editForm.dpid = res.data.id;
+        this.model.dpid = res.data.id;
       });
       request.updateUser(this.model).then(res => {
         if (res.data === "update") {

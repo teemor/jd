@@ -21,33 +21,30 @@
       <div v-if="add==true" style="padding-left:30px">
         <el-form :model="formInline" ref="dep" :rules="rules" class="form-line">
           <el-form-item label="部门名称" prop="name">
-            <el-input size="mini" v-model="formInline.name"  maxlength="25" show-word-limit placeholder="部门名称"></el-input>
+            <el-input
+              size="mini"
+              v-model="formInline.name"
+              maxlength="25"
+              show-word-limit
+              placeholder="部门名称"
+            ></el-input>
           </el-form-item>
           <el-form-item label="上级部门" prop="spid">
-            <el-select v-model="formInline.first" placeholder="请选择" size="mini" @change="firstDep">
-              <el-option
-                size="mini"
-                v-for="item in depFirst"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-            <el-select v-model="formInline.second" placeholder="请选择" size="mini">
-              <el-option
-                size="mini"
-                v-for="item in depSecond"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
+            <el-cascader
+              v-model="formInline.spid"
+              :options="fileDpOptions"
+              size="mini"
+              change-on-select
+              clearable
+              :props="optionProps"
+              ref="cascader"
+            ></el-cascader>
           </el-form-item>
           <el-form-item label="部门编码" prop="code">
             <el-input size="mini" v-model="formInline.code" placeholder="部门编码"></el-input>
           </el-form-item>
           <el-form-item label="排序码" prop="level">
-            <el-input size="mini" v-model="formInline.level" placeholder="排序码"></el-input>
+            <el-input size="mini" v-model.number="formInline.level" placeholder="排序码"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button class="fr" size="mini" type="primary" @click="onSubmit">保存</el-button>
@@ -60,28 +57,15 @@
             <el-input size="mini" v-model="editInline.name" placeholder="员工姓名"></el-input>
           </el-form-item>
           <el-form-item label="上级部门" prop="spid">
-            <el-input @focus="showSp" size="mini" v-if="Sdp===0" :value="editInline.spname"></el-input>
-            <el-col v-else-if="Sdp===1">
-              <el-select v-model="first" placeholder="请选择" size="mini" @change="firstDep">
-                <el-option
-                  size="mini"
-                    
-                  v-for="item in depFirst"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"
-                ></el-option>
-              </el-select>
-              <el-select v-model="second" placeholder="请选择" size="mini">
-                <el-option
-                  size="mini"
-                  v-for="item in depSecond"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"
-                ></el-option>
-              </el-select>
-            </el-col>
+            <el-cascader
+              v-model="editInline.spid"
+              :options="fileDpOptions"
+              size="mini"
+              change-on-select
+              clearable
+              :props="optionProps"
+              ref="cascader"
+            ></el-cascader>
           </el-form-item>
           <el-form-item label="部门编码" prop="code">
             <el-input size="mini" v-model="editInline.code" placeholder="部门编码"></el-input>
@@ -111,7 +95,18 @@ export default {
       rules: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }],
         code: [{ required: true, message: "请输入部门编码", trigger: "blur" }],
-        level: [{ required: true, message: "请输入排序码", trigger: "blur" }]
+        level: [
+          {
+            required: true,
+            message: "请输入排序码",
+            trigger: "blur"
+          },
+          {
+            type: "number",
+            message: "排序码用数字",
+            trigger: "blur"
+          }
+        ]
       },
       add: 0,
       edit: 0,
@@ -132,6 +127,7 @@ export default {
   },
 
   mounted() {
+    this.selectDpTree();
     this.selectDep();
     this.selectDepId(0);
     // this.selectAddAuth();
@@ -147,7 +143,7 @@ export default {
       if (this.editInline.name == "") {
         this.$commonUtils.setMessage("info", "请选择删除的部门");
       } else {
-        request.deleteAll({ id: this.formInline.spid }).then(res => {
+        request.deleteAll({ id: this.editInline.id }).then(res => {
           if (res.data === "can") {
             this.$confirm("部门下面有子部门， 是否全部删除?", "提示", {
               confirmButtonText: "确定",
@@ -155,11 +151,12 @@ export default {
               type: "warning"
             })
               .then(() => {
-                request.deletedp({ id: this.formInline.spid }).then(res => {
+                request.deletedp({ id: this.editInline.id }).then(res => {
                   if (res.data === "delete") {
                     this.$commonUtils.setMessage("success", "删除成功");
                     this.selectDep({});
                     this.selectDepId(0);
+                    this.selectDpTree();
                   }
                 });
               })
@@ -173,11 +170,12 @@ export default {
               type: "warning"
             })
               .then(() => {
-                request.deletedp({ id: this.formInline.spid }).then(res => {
+                request.deletedp({ id: this.editInline.id }).then(res => {
                   if (res.data === "delete") {
                     this.$commonUtils.setMessage("success", "删除成功");
                     this.selectDep({});
                     this.selectDepId(0);
+                    this.selectDpTree();
                   }
                 });
               })
@@ -227,22 +225,20 @@ export default {
       console.log(this.second, "this.second");
       console.log(this.editInline, "??");
       this.$refs.dep.validate(valid => {
-        if (this.first == "undefined" || this.first == 0) {
-          this.editInline.spid = this.editInline.spid;
-        } else if (
-          this.formInline.second == "undefined" ||
-          this.formInline.second == 0
-        ) {
-          this.editInline.spid = this.first;
-        } else {
-          this.editInline.spid = this.second;
-        }
+        this.$refs["cascader"].getCheckedNodes().map(res => {
+          this.editInline.spid = res.data.id;
+        });
         if (valid) {
           request.updatedp(this.editInline).then(res => {
-            console.log(res, "res");
             this.selectDep({});
             this.selectDepId(0);
+            this.selectDpTree();
             this.edit = 0;
+            if (res.data === "repeat") {
+              this.$commonUtils.setMessage("error", "重复字段");
+            } else {
+              this.$commonUtils.setMessage("success", "修改成功");
+            }
           });
         } else {
           this.$commonUtils.setMessage("error", "提交错误！请填完整信息");
@@ -255,21 +251,13 @@ export default {
        */
       this.$refs.dep.validate(valid => {
         if (valid) {
-          if (
-            this.formInline.first == "undefined" ||
-            this.formInline.first == 0
-          ) {
-            this.adddep(this.formInline);
-          } else if (
-            this.formInline.second == "undefined" ||
-            this.formInline.second == 0
-          ) {
-            this.formInline.spid = this.formInline.first;
-            this.adddep(this.formInline);
-          } else {
-            this.formInline.spid = this.formInline.second;
-            this.adddep(this.formInline);
+          this.$refs["cascader"].getCheckedNodes().map(res => {
+            this.formInline.spid = res.data.id;
+          });
+          if (this.formInline.spid.length == 0) {
+            this.formInline.spid = 0;
           }
+          this.adddep(this.formInline);
         } else {
           this.$commonUtils.setMessage("error", "提交错误！请填完整信息");
         }
@@ -286,9 +274,11 @@ export default {
           this.formInline.code = "";
           this.formInline.level = "";
           this.add = 0;
+          this.selectDpTree();
           this.selectDep({});
           this.selectDepId(0);
         } else if (res.data === "repeat") {
+          this.$commonUtils.setMessage("error", "重复数据");
         }
       });
     },
