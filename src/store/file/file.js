@@ -1,6 +1,7 @@
 import request from "@/api/file/file";
 import * as type from '@/store/mutation/file'
 import commonUtils from "@/assets/util/commonUtil";
+import api from '@/jsapi'
 
 // 初始化变量
 const state = {
@@ -119,7 +120,7 @@ const mutations = {
 
 }
 const getters = {
-    url: () => request.url,
+    uploadUrl: () => request.uploadUrl,
     editdisabled: state => state.editdisabled,//编辑禁用
     modifyModel: state => state.modifyModel, // 修改文件model
     uploadData: state => state.uploadData, // 上传需要的id
@@ -129,15 +130,15 @@ const getters = {
 // 提交mutation改变状态
 const actions = {
     // 初始化获取展示列表
-    getListData: function ({ state, commit }, model) {
+    selectArchives: function ({ state, commit }, model) {
         request.selectArchives({ page: state.page, pageSize: state.pageSize, spid: model.spid })
             .then(res => {
                 // let apiupload = "http://172.16.0.252:8080/"
-                let apiupload = "http://yz.c.ic.ci/"
+                // let apiupload = "http://yz.c.ic.ci/"
                 // let apiupload = "http://localhost:8080/"
                 res.data.tableData.map(item => {
-                    return item.doc = item.doc == '' ? '暂无' : apiupload + item.doc,
-                        item.pdf = item.pdf == '' ? '暂无' : apiupload + item.pdf
+                    return item.doc = item.doc == '' ? '暂无' : api.apiupload + item.doc,
+                        item.pdf = item.pdf == '' ? '暂无' : api.apiupload + item.pdf
                 })
                 commit('spid', { spid: model.spid })
                 commit(type.FILE_LIST_DATA, res.data)
@@ -152,7 +153,7 @@ const actions = {
                 commit('getId', { id: res.data.id })
                 commit('updisabled', false)
                 console.log(this.state, 'this')
-                dispatch('getListData', { spid: this.state.file.spid })
+                dispatch('selectArchives', { spid: this.state.file.spid })
             } else if (res.data.code === "repeat") {
                 commonUtils.setMessage("info", "重复字段");
                 commit('updisabled', true)
@@ -168,7 +169,7 @@ const actions = {
                 if (res.data.code === 'insert') {
                     commonUtils.setMessage('success', '修改成功')
                     // commit('updisabled', false)
-                    dispatch('getListData', { spid: this.state.file.spid })
+                    dispatch('selectArchives', { spid: this.state.file.spid })
                 } else {
                     // commit('updisabled', true)
                     commonUtils.setMessage('warnning', '修改失败')
@@ -183,7 +184,7 @@ const actions = {
             .then(res => {
                 if (res.data === 'delete') {
                     commonUtils.setMessage('success', '删除成功')
-                    dispatch('getListData', { spid: this.state.file.spid })
+                    dispatch('selectArchives', { spid: this.state.file.spid })
                 } else {
                     commonUtils.setMessage('warnning', '删除失败')
                 }

@@ -101,7 +101,7 @@ export default {
       let page = 1;
       let pageSize = 10;
       this.$store.commit("file/FILE_PAGE_SIZE", { page, pageSize });
-      this.$store.dispatch("file/getListData", { spid: data.id });
+      this.$store.dispatch("file/selectArchives", { spid: data.id });
       this.$store.commit("file/spid", { spid: data.id });
     },
     // 档案级别树形
@@ -125,7 +125,7 @@ export default {
     paginationChange(page, pageSize) {
       this.$store.commit("file/FILE_PAGE_SIZE", { page, pageSize });
       console.log(this.$store.state);
-      this.$store.dispatch("file/getListData", {
+      this.$store.dispatch("file/selectArchives", {
         spid: this.$store.state.file.spid
       });
     },

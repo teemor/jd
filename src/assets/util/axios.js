@@ -2,8 +2,9 @@ import axios from 'axios'
 import Vue from 'vue'
 import commonUtil from '@/assets/util/commonUtil.js'
 
-//axios.defaults.baseURL = 'http://172.16.0.252:8080/jdem/jdTesting'
-axios.defaults.baseURL = 'http://10.10.10.252:8080/jdem/jdTesting'
+// axios.defaults.baseURL = 'http://172.16.0.252:8080/jdem/jdTesting'
+axios.defaults.baseURL = 'http://39.99.38.237:8888/jdem/jdTesting'
+// axios.defaults.baseURL = 'http://10.10.10.252:8080/jdem/jdTesting'
 // axios.defaults.baseURL = 'http://localhost:8080/jdem/jdTesting'http://172.16.0.252:8080/
 // axios.defaults.baseURL = 'http://yz.c.ic.ci/jdem/jdTesting'
 // axios.defaults.baseURL = 'http://172.16.0.196:8080/jdTesting'

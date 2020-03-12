@@ -1,12 +1,16 @@
 import axios from '@/assets/util/axios'
+import commonUtils from "@/assets/util/commonUtil";
 
 export default {
   secondMenuData: function (id) {
-    return axios.get(`/submenuTree?id=${id}`)
+    let userInfo = JSON.parse(commonUtils.getCookie("id"));
+    let uname = userInfo.uname;
+    return axios.get(`/submenuTree?id=${id}&user=${uname}`)
   },
   // 登录 admin yz@123
-  menuData: function () {
-    return axios.get(`/menuTree`)
+  menuData: function (uname) {
+    console.log(uname,'api')
+    return axios.get(`/menuTree?user=${uname}`)
     // return axios.get(`/menuTree`)
   },
   // 查询用户

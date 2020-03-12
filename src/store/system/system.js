@@ -7,7 +7,7 @@ const state = {
   menuData: [],
   page: 1,
   pageSize: 10,
-  userModel: {}
+  userModel: {},
 }
 const getters = {
   // 登录form表单
@@ -27,7 +27,9 @@ const actions = {
   menuData: function ({
     commit
   }) {
-    request.menuData().then(res => {
+    let userInfo = JSON.parse(commonUtils.getCookie("id"));
+    let uname = userInfo.uname;
+    request.menuData(uname).then(res => {
       commit(type.MENU_DATA, res.data.data)
     })
   },

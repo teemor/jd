@@ -1,5 +1,8 @@
 import axios from '@/assets/util/axios'
+import api from '@/jsapi'
+
 export default {
+    picUrl:`${api.picUrl}`,
     // 平台字典用户
     selectAll: function () {
         return axios.get(`/platformManagement/selectAll?id=0`)
