@@ -4,6 +4,28 @@
       <el-button size="mini" type="primary" @click="addDevice">新增</el-button>
       <el-button size="mini" type="primary" @click="deleteAllDevice">批量删除</el-button>
     </div>
+      <div>
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="工艺段">
+          <el-input size="mini" v-model="formInline.user" placeholder="工艺段"></el-input>
+        </el-form-item>
+        <el-form-item label="名称">
+          <el-input size="mini" v-model="formInline.department" placeholder="名称"></el-input>
+        </el-form-item>
+          <el-form-item label="编号">
+          <el-input size="mini" v-model="formInline.department" placeholder="编号"></el-input>
+        </el-form-item>
+          <el-form-item label="部门">
+          <el-input size="mini" v-model="formInline.department" placeholder="所属部门"></el-input>
+        </el-form-item>
+          <el-form-item label="启用">
+          <el-input size="mini" v-model="formInline.department" placeholder="启用"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button size="mini" type="primary" @click="searchUser">查询</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <div style="float:left;width:100%">
       <general-table
         :body="tableData"

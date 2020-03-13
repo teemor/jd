@@ -9,7 +9,7 @@ export default {
   },
   // 登录 admin yz@123
   menuData: function (uname) {
-    console.log(uname,'api')
+    console.log(uname, 'api')
     return axios.get(`/menuTree?user=${uname}`)
     // return axios.get(`/menuTree`)
   },
@@ -19,7 +19,7 @@ export default {
   },
   // 查询条件查询用户
   selectUserModel: function (model) {
-    return axios.get(`/user/findByName?uname=${model.uname}&page=${model.page}&pageSize=${model.pageSize}`)
+    return axios.get(`/user/findByName?uname=${model.user}&department=${model.department}&page=${model.page}&pageSize=${model.pageSize}`)
   },
   // 启停用户
   statusUser: function (model) {
