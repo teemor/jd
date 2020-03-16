@@ -6,11 +6,20 @@
     </div>
     <div>
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="员工姓名">
+        <el-form-item label="用户名">
           <el-input size="mini" v-model="formInline.user" placeholder="员工姓名"></el-input>
         </el-form-item>
         <el-form-item label="所属部门">
-          <el-input size="mini" v-model="formInline.name" placeholder="用户级别"></el-input>
+          <el-input size="mini" v-model="formInline.department" placeholder="所属部门"></el-input>
+          <!-- <el-cascader
+            v-model="formInline.department"
+            :options="fileDpOptions"
+            size="mini"
+            change-on-select
+            clearable
+            :props="optionProps"
+            ref="cascader"
+          ></el-cascader> -->
         </el-form-item>
         <el-form-item>
           <el-button size="mini" type="primary" @click="searchUser">查询</el-button>
@@ -220,7 +229,7 @@ export default {
       },
       formInline: {
         user: "",
-        region: ""
+        department: ""
       },
       idBatch: "",
       tableData: {
@@ -323,10 +332,15 @@ export default {
     },
     // 查询
     searchUser() {
-      console.log(this.formInline, "查询条件");
-      request.selectUserModel().then(res => {
+      // this.$refs["cascader"].getCheckedNodes().map(res => {
+      //   this.formInline.department = res.data.id;
+      // });
+      this.formInline.page = this.form.page;
+      this.formInline.pageSize = this.form.pageSize;
+      request.selectUserModel(this.formInline).then(res => {
+        this.tableData.tableData = res.data.tableData;
+        this.tableData.total = res.data.totalItem;
         // this.authData = res.data.tableData;
-        console.this.authData(res, "res");
       });
     },
     // 添加用户

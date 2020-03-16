@@ -19,7 +19,7 @@
         <el-button size="mini" type="primary" @click="delDepart">删除</el-button>
       </div>
       <div v-if="add==true" style="padding-left:30px">
-        <el-form :model="formInline" ref="dep" :rules="rules" class="form-line">
+        <el-form :model="formInline" ref="dep" :rules="rules" class="form-line" label-width="80px">
           <el-form-item label="部门名称" prop="name">
             <el-input
               size="mini"
@@ -52,9 +52,9 @@
         </el-form>
       </div>
       <div class="fl" v-if="edit==1" style="padding-left:30px">
-        <el-form :model="editInline" ref="dep" :rules="rules" class="form-line">
+        <el-form :model="editInline" ref="dep" :rules="rules" class="form-line" label-width="80px">
           <el-form-item label="部门名称" prop="name">
-            <el-input size="mini" v-model="editInline.name" placeholder="员工姓名"></el-input>
+            <el-input size="mini" v-model="editInline.name" placeholder="部门名称"  maxlength="25"></el-input>
           </el-form-item>
           <el-form-item label="上级部门" prop="spid">
             <el-cascader
@@ -221,9 +221,6 @@ export default {
      * 修改部门
      */
     editDep() {
-      console.log(this.first, "this.first");
-      console.log(this.second, "this.second");
-      console.log(this.editInline, "??");
       this.$refs.dep.validate(valid => {
         this.$refs["cascader"].getCheckedNodes().map(res => {
           this.editInline.spid = res.data.id;
