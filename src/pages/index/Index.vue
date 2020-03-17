@@ -2,6 +2,7 @@
   <div>
     <img src="../../assets/img/index.png" class="login-logo" />
   </div>
+  
 </template>
 
 <script>
