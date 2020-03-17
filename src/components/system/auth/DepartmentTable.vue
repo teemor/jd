@@ -54,7 +54,7 @@
       <div class="fl" v-if="edit==1" style="padding-left:30px">
         <el-form :model="editInline" ref="dep" :rules="rules" class="form-line" label-width="80px">
           <el-form-item label="部门名称" prop="name">
-            <el-input size="mini" v-model="editInline.name" placeholder="部门名称"  maxlength="25"></el-input>
+            <el-input size="mini" v-model="editInline.name" placeholder="部门名称" maxlength="25"></el-input>
           </el-form-item>
           <el-form-item label="上级部门" prop="spid">
             <el-cascader
@@ -125,7 +125,11 @@ export default {
       filterText: ""
     };
   },
-
+  watch: {
+    filterText(val) {
+      this.$refs.tree2.filter(val);
+    }
+  },
   mounted() {
     this.selectDpTree();
     this.selectDep();
@@ -133,6 +137,11 @@ export default {
     // this.selectAddAuth();
   },
   methods: {
+    // 过滤
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.name.indexOf(value) !== -1;
+    },
     // 编辑部门维护
     showSp() {
       this.Sdp = 1;
