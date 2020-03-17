@@ -2,20 +2,20 @@
 <!-- 工艺段 -->
   <div>
     <!-- 新增工艺段 -->
-    <div class="add-btn">
+    <div class="btn_contain">
       <el-button size="mini" type="primary" @click="addTech">新增工艺段</el-button>
       <el-button size="mini" type="primary" @click="deleteBatchTech">批量删除</el-button>
     </div>
     <el-dialog title="新增工艺段" :visible.sync="addDialog">
       <el-form :model="add_tech_form" label-width="150px" ref="addForm" :rules="rules">
         <el-form-item  label="名称" prop="name">
-          <el-input v-model="add_tech_form.name" placeholder="名称"></el-input>
+          <el-input v-model="add_tech_form.name" placeholder="名称" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="编码" prop="code">
-          <el-input v-model="add_tech_form.code" placeholder="编码"></el-input>
+          <el-input v-model="add_tech_form.code" placeholder="编码" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="排序码" prop="sort">
-          <el-input v-model="add_tech_form.sort" placeholder="排序码"></el-input>
+          <el-input v-model="add_tech_form.sort" placeholder="排序码" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="状态" prop="state">
           <el-radio-group v-model="add_tech_form.state" size="mini">
@@ -62,13 +62,13 @@
     <el-dialog title="工艺段详情" :visible.sync="detailsDialog"> 
       <el-form :model="tech_form" label-width="150px">
         <el-form-item  label="名称" prop="name">
-          <el-input v-model="tech_form.name" placeholder="名称"></el-input>
+          <el-input v-model="tech_form.name" placeholder="名称" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="编码" prop="code">
-          <el-input v-model="tech_form.code" placeholder="编码"></el-input>
+          <el-input v-model="tech_form.code" placeholder="编码" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="排序码" prop="sort">
-          <el-input v-model="tech_form.sort" placeholder="排序码"></el-input>
+          <el-input v-model="tech_form.sort" placeholder="排序码" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="状态" prop="state">
           <el-radio-group v-model="tech_form.state" size="mini">
@@ -78,28 +78,20 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="detailsDialog = false">关 闭</el-button>
+        <el-button @click="detailsDialog = false" type="primary">关 闭</el-button>
       </div>
-    </el-dialog>
-    <!-- 停启工艺段 -->
-    <el-dialog title="提示" :visible.sync="statusDialog" width="30%" center>
-      <span>确定{{stateModel.state=='停用'?'启用':'停用'}}该工艺段吗</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="statusDialog = false">取 消</el-button>
-        <el-button type="primary" @click="statusTech">确 定</el-button>
-      </span>
     </el-dialog>
     <!-- 修改工艺段 -->
     <el-dialog title="修改工艺段" :visible.sync="editDialog"> 
       <el-form :model="edit_tech_form" label-width="150px" ref="editForm" :rules="rules">
         <el-form-item  label="名称" prop="name">
-          <el-input v-model="edit_tech_form.name" placeholder="名称"></el-input>
+          <el-input v-model="edit_tech_form.name" placeholder="名称" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="编码" prop="code">
-          <el-input v-model="edit_tech_form.code" placeholder="编码"></el-input>
+          <el-input v-model="edit_tech_form.code" placeholder="编码" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="排序码" prop="sort">
-          <el-input v-model="edit_tech_form.sort" placeholder="排序码"></el-input>
+          <el-input v-model="edit_tech_form.sort" placeholder="排序码" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="状态">
           <el-radio-group v-model="edit_tech_form.state" size="mini">
@@ -161,11 +153,6 @@ export default {
         sort: "",
         state: ""
       },
-      statusDialog: false,
-      stateModel: {
-        state: "",
-        id: ""
-      },
       detailsDialog: false,
       tech_form: {
         name: "",
@@ -212,7 +199,6 @@ export default {
       this.$refs[formName].validate((pass) => {
         if(pass){
           request.addSaveTech(this.add_tech_form).then(res => {
-            console.log(res,"res");
             this.getTech({});
             this.add_tech_form = { state: "启用" };
             this.addDialog = false;
@@ -222,10 +208,9 @@ export default {
             });
           })
         } else {
-          console.log("失败")
+          this.$commonUtils.setMessage("error", "请正确填写信息");
         }
       })
-      
     },
     // 修改工艺段
     editTech(data) {  
@@ -244,7 +229,7 @@ export default {
             });
           })
         } else {
-          console.log("失败");
+          this.$commonUtils.setMessage("error", "请正确填写信息");
           this.getTech({});
         }
       })
@@ -257,7 +242,6 @@ export default {
           type: 'warning'
         }).then(() => {
           request.deleteTech(data).then(res => {
-            console.log(res)
             if(res.data === 1) {
               this.getTech({});
               this.$message({
@@ -280,13 +264,8 @@ export default {
     },
     // 停启用
     state(data) {
-      this.statusDialog = true;
-      this.stateModel = data;
-    },
-    statusTech() {
-      request.statusTech({ id:this.stateModel.id,state: this.stateModel.state }).then(res => {
+      request.statusTech({ id:data.id,state: data.state }).then(res => {
         this.getTech({});
-        this.statusDialog = false;
         this.$message({
           type: 'success',
           message: '状态更改成功!'
@@ -295,7 +274,6 @@ export default {
     },
     // 分页查询
     paginationChange(page, pageSize) {
-      console.log(page + ",," + pageSize);
       this.getTech({ page: page, pageSize: pageSize });
     },
     // 批量删除
@@ -318,7 +296,6 @@ export default {
         }).then(() => {
           request.deleteBatchTech({ idBatch:this.idBatch.join() }).then(res => {
             this.getTech({});
-            console.log(res)
             this.$message({
               type: "success",
               message: "删除成功!"

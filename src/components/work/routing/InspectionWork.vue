@@ -35,7 +35,7 @@
       </el-form>
     </div>
     <!-- 查询巡检任务 -->
-    <el-button size="mini" type="primary" @click="addIns">新增</el-button>
+    <el-button size="mini" type="primary" @click="addIns" style="margin-bottom:10px">新增</el-button>
     <div id="inspection-work">
       <div>
         <general-table 

@@ -2,24 +2,24 @@
 <!-- 检测单位 -->
   <div>
     <!-- 新增检测单位 -->
-    <div class="add-btn">
+    <div class="btn_contain">
       <el-button size="mini" type="primary" @click="addUnit">新增监测单位</el-button>
       <el-button size="mini" type="primary" @click="deleteBatchUnit">批量删除</el-button>
     </div>
     <el-dialog title="新增监测单位" :visible.sync="addDialog">
       <el-form :model="add_unit_form" label-width="150px" ref="addForm" :rules="rules">
         <el-form-item  label="单位名称" prop="name">
-          <el-input v-model="add_unit_form.name" placeholder="单位名称"></el-input>
+          <el-input v-model="add_unit_form.name" placeholder="单位名称" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="联系电话" prop="photo" 
         :rules="[{ required: true, validator: telephone, trigger: 'blur' }]">
-          <el-input v-model="add_unit_form.photo" placeholder="联系电话"></el-input>
+          <el-input v-model="add_unit_form.photo" placeholder="联系电话" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="联系人" prop="contact">
-          <el-input v-model="add_unit_form.contact" placeholder="联系人"></el-input>
+          <el-input v-model="add_unit_form.contact" placeholder="联系人" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="检测类型" prop="type">
-          <el-select v-model="add_unit_form.type" placeholder="请选择检测类型">
+          <el-select v-model="add_unit_form.type" placeholder="请选择检测类型" size="mini">
             <el-option label="设备" value="设备"></el-option>
             <el-option label="环境" value="环境"></el-option>
           </el-select>
@@ -69,16 +69,16 @@
     <el-dialog title="监测单位详情" :visible.sync="detailsDialog">
       <el-form :model="unit_form" label-width="150px">
         <el-form-item  label="单位名称">
-          <el-input v-model="unit_form.name" placeholder="单位名称"></el-input>
+          <el-input v-model="unit_form.name" placeholder="单位名称" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="联系电话">
-          <el-input v-model="unit_form.photo" placeholder="联系电话"></el-input>
+          <el-input v-model="unit_form.photo" placeholder="联系电话" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="联系人">
-          <el-input v-model="unit_form.contact" placeholder="联系人"></el-input>
+          <el-input v-model="unit_form.contact" placeholder="联系人" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="检测类型">
-          <el-select v-model="unit_form.type" placeholder="请选择检测类型">
+          <el-select v-model="unit_form.type" placeholder="请选择检测类型" size="mini">
             <el-option label="设备" value="设备"></el-option>
             <el-option label="环境" value="环境"></el-option>
           </el-select>
@@ -91,31 +91,24 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="detailsDialog = false">关 闭</el-button>
+        <el-button @click="detailsDialog = false" type="primary">关 闭</el-button>
       </div>
-    </el-dialog>
-    <!-- 停启监测单位 -->
-    <el-dialog title="提示" :visible.sync="statusDialog" width="30%" center>
-      <span>确定{{stateModel.state=='停用'?'启用':'停用'}}该监测单位吗</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="statusDialog = false">取 消</el-button>
-        <el-button type="primary" @click="statusUnit">确 定</el-button>
-      </span>
     </el-dialog>
     <!-- 修改监测单位 -->
     <el-dialog title="修改监测单位" :visible.sync="editDialog">
       <el-form :model="edit_unit_form" label-width="150px" ref="editForm" :rules="rules">
         <el-form-item  label="单位名称" prop="name">
-          <el-input v-model="edit_unit_form.name" placeholder="单位名称"></el-input>
+          <el-input v-model="edit_unit_form.name" placeholder="单位名称" size="mini"></el-input>
         </el-form-item>
-        <el-form-item label="联系电话" prop="photo">
-          <el-input v-model="edit_unit_form.photo" placeholder="联系电话"></el-input>
+        <el-form-item label="联系电话" prop="photo"
+          :rules="[{ required: true, validator: telephone, trigger: 'blur' }]">
+          <el-input v-model="edit_unit_form.photo" placeholder="联系电话" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="联系人" prop="contact">
-          <el-input v-model="edit_unit_form.contact" placeholder="联系人"></el-input>
+          <el-input v-model="edit_unit_form.contact" placeholder="联系人" size="mini"></el-input>
         </el-form-item>
         <el-form-item label="检测类型">
-          <el-select v-model="edit_unit_form.type" placeholder="请选择检测类型">
+          <el-select v-model="edit_unit_form.type" placeholder="请选择检测类型" size="mini">
             <el-option label="设备" value="设备"></el-option>
             <el-option label="环境" value="环境"></el-option>
           </el-select>
@@ -185,11 +178,6 @@ export default {
         type: "设备",
         state: "启用"
       },
-      statusDialog: false,
-      stateModel: {
-        state: "",
-        id: ""
-      },
       form: {
         page: 1,
         pageSize: 10
@@ -209,9 +197,6 @@ export default {
         ],
         contact: [
           { required: true, message: '请输入联系人', trigger: 'blur' }
-        ],
-        photo: [
-          { required: true, message: '请输入联系电话', trigger: 'blur' }
         ],
       }
     };
@@ -241,7 +226,6 @@ export default {
       this.$refs[formName].validate((valid) => {
         if(valid){
           request.addSaveUnit(this.add_unit_form).then(res => {
-            console.log(res,"res");
             this.getUnit({});
             this.add_unit_form = { state:"启用" };
             this.addDialog = false;
@@ -251,7 +235,7 @@ export default {
             });
           })
         } else {
-          console.log("失败")
+          this.$commonUtils.setMessage("error", "请正确填写信息");
         }
       })
     },
@@ -272,8 +256,8 @@ export default {
             });
           })
         } else {
-          console.log("失败");
           this.getUnit({});
+          this.$commonUtils.setMessage("error", "请正确填写信息");
         }
       })
       
@@ -308,13 +292,8 @@ export default {
     },
     // 停启检测单位
     state(data) {
-      this.statusDialog = true;
-      this.stateModel = data;
-    },
-    statusUnit() {
-      request.statusUnit({ id: this.stateModel.id,state: this.stateModel.state }).then(res =>{
+      request.statusUnit({ id: data.id,state: data.state }).then(res =>{
         this.getUnit({});
-        this.statusDialog = false;
         this.$message({
           type: 'success',
           message: '状态更改成功!'
@@ -323,7 +302,6 @@ export default {
     },
     // 分页查询
     paginationChange(page, pageSize) {
-      console.log(page + ",," + pageSize);
       this.getUnit({ page: page, pageSize: pageSize });
     },
     // 批量删除
@@ -346,7 +324,6 @@ export default {
         }).then(() => {
           request.deleteBatchUnit({ idBatch:this.idBatch.join() }).then(res => {
             this.getUnit({});
-            console.log(res)
             this.$message({
               type: "success",
               message: "删除成功!"

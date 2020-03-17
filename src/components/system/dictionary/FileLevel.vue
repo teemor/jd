@@ -16,7 +16,7 @@
       ></el-tree>
     </div>
     <div class="fl" style="padding-left:30px">
-      <div class="add-btn">
+      <div style="padding: 40px;">
         <el-button size="mini" type="primary" @click="addFile">新增档案级别</el-button>
         <el-button size="mini" type="primary" @click="editFile">修改档案级别</el-button>
         <el-button size="mini" type="primary" @click="delFile">删除档案级别</el-button>
@@ -156,7 +156,6 @@ export default {
     selectAll() {
       request.selectAll().then(res => {
         this.fileData = res.data.data;
-        console.log(this.fileData, "fileData");
         Object.values(res.data).map(data => {
           data.map(res1 => {
             this.options = data;
@@ -195,14 +194,13 @@ export default {
       this.$refs[formName].validate(pass => {
         if (pass) {
           request.addSaveFile(this.add_file_form).then(res => {
-            console.log(res, "res");
             this.selectAll();
             this.add_file_form = { spid: 0, state: "启用" };
             this.add = false;
             this.$commonUtils.setMessage("success", "保存成功");
           });
         } else {
-          console.log("失败");
+          this.$commonUtils.setMessage("error", "请正确填写信息");
         }
       });
     },
@@ -219,11 +217,9 @@ export default {
       this.$refs['cascader'].getCheckedNodes().map((res) => {
         this.edit_file_form.spid = res.data.id;
       })
-      console.log(this.edit_file_form)
       this.$refs[formName].validate((pass) => {
         if(pass){
           request.editSaveFile(this.edit_file_form).then(res => {
-            console.log(res, "res");
             this.selectAll();
             this.edit = false;
             this.$commonUtils.setMessage("success", "修改成功");
@@ -291,9 +287,6 @@ export default {
   padding: 40px;
   height: 600px;
   background: #f4f4f5;
-}
-#filelevel .add-btn {
-  padding: 40px;
 }
 #filelevel .el-tree-node__label{ 
   width: auto !important;
