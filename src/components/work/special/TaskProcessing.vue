@@ -244,9 +244,7 @@ export default {
     // 获取任务
     getProcess(model) {
       request.getProcess(JSON.stringify(model) == "{}" ? this.pageForm : model).then(res => {
-        console.log(res)
         if(res.data.data === '无任务') {
-          console.log(res.data.data)
           this.$commonUtils.setMessage("warning", "无任务");
         } else {
           this.tableData.tableData = res.data.data;
@@ -261,15 +259,14 @@ export default {
           this.$commonUtils.setMessage("warning", "无符合条件结果");
         } else {
           this.tableData.tableData = res.data.data;
-          this.$refs[formInline].resetFields()
         }
+        this.$refs[formInline].resetFields()
       })
     },
     //  编辑
     editProcess(data) {
       this.editDialog = true;
       this.form = data;
-      // this.dealForm = data;
       this.dealForm.num = data.num;
       this.dealForm.dealContent = data.dealContent;
       this.dealForm.dealAttachment = data.dealAttachment;
@@ -282,7 +279,7 @@ export default {
       // 处理文件链接
       this.fileList = []; 
       this.dealFileList = []; 
-      if(data.attachment.length !== 0) {
+      if(data.attachment !== "" && data.attachment !== null) {
         let a = data.attachment.split(',');  
         if(a.length > 0) {
           a.forEach(item => {
@@ -296,7 +293,7 @@ export default {
         }
         this.attachment.push(data.attachment.split(','))
       }
-      if(data.dealAttachment.length !== 0 && data.dealAttachment !== null) {
+      if(data.dealAttachment !== "" && data.dealAttachment !== null) {
         let a = data.dealAttachment.split(',');  
         if(a.length > 0) {
           a.forEach(item => {
@@ -315,7 +312,6 @@ export default {
     dealSave() {
       this.dealForm.dealAttachment = this.dealAttachment.join(',');
       this.dealForm.stu = '已提交';
-      console.log(this.dealForm, '保存')
       request.dealSave(this.dealForm).then(res => {
         this.$commonUtils.setMessage("success", "保存成功");
         this.getProcess({});
@@ -325,7 +321,6 @@ export default {
     dealCommit() {
       this.dealForm.stu = '已完成';
       this.dealForm.dealAttachment = this.dealAttachment.join(',');
-      console.log(this.dealForm, '发布')
       request.dealSave(this.dealForm).then(res => {
         this.$commonUtils.setMessage("success", "发布成功");
         this.getProcess({});

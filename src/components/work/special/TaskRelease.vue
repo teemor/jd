@@ -268,7 +268,6 @@ export default {
     // 获取任务
     getRelease(model) {
       request.getRelease(JSON.stringify(model) == "{}" ? this.pageForm : model).then(res => {
-        console.log(res.data)
         if(res.data.data === '无任务') {
           this.$commonUtils.setMessage("warning", "无任务");
         } else {
@@ -284,8 +283,8 @@ export default {
           this.$commonUtils.setMessage("warning", "无符合条件结果");
         } else {
           this.tableData.tableData = res.data.data;
-          this.$refs['formInline'].resetFields()
         }
+        this.$refs['formInline'].resetFields()
       })
     },
     // 新增
@@ -308,8 +307,6 @@ export default {
       this.addForm.attachment = this.attachment.join(',');
       let dp = this.addForm.dp.toLocaleString();
       this.addForm.dp = dp;
-      console.log(typeof(this.addForm.dp))
-      console.log(this.addForm)
       this.$refs.addForm.validate(pass => {
         if(pass) {
           if(this.edit == false) {
@@ -404,7 +401,7 @@ export default {
       // 处理文件链接
       this.fileList = []; 
       this.dealFileList = []; 
-      if(data.attachment.length !== 0) {
+      if(data.attachment !== "" && data.attachment !== null) {
         let a = data.attachment.split(',');  
         if(a.length > 0) {
           a.forEach(item => {
@@ -418,7 +415,7 @@ export default {
         }
         this.attachment.push(data.attachment.split(','))
       }
-      if(data.dealAttachment.length !== 0) {
+      if(data.dealAttachment !== "" && data.dealAttachment !== null) {
         let a = data.dealAttachment.split(',');  
         if(a.length > 0) {
           a.forEach(item => {
