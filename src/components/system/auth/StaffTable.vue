@@ -414,7 +414,9 @@ export default {
       this.$refs["cascader"].getCheckedNodes().map(res => {
         this.model.dpid = res.data.id;
       });
-      request.updateUser(this.model).then(res => {
+      this.$refs.user.validate(valid => {
+        if (valid) {
+         request.updateUser(this.model).then(res => {
         if (res.data === "update") {
           this.$commonUtils.setMessage("success", "修改成功");
           // commit('updisabled', false)
@@ -423,6 +425,10 @@ export default {
           commonUtils.setMessage("warnning", "修改失败");
         }
         this.editDialog = false;
+      });
+        } else {
+          this.$commonUtils.setMessage("error", "提交错误！请填完整信息");
+        }
       });
     },
     // 分页查询
