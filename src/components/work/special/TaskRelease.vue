@@ -37,7 +37,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-button size="mini" type="primary" @click="addRelease">新增</el-button>
+    <el-button size="mini" type="primary" @click="addRelease" style="margin-bottom:10px">新增</el-button>
     <div>
       <general-table 
         :body="tableData" 

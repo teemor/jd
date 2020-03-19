@@ -2,7 +2,9 @@
 <!-- 任务类别 -->
   <div id="task-category">
     <div>
-      <el-button size="mini" type="primary" @click="addCategory">新增</el-button>
+      <div class="btn_contain">
+        <el-button size="mini" type="primary" @click="addCategory">新增</el-button>
+      </div>
       <general-table 
         :body="tableData" 
         :showPagination="true" 
@@ -118,7 +120,6 @@ export default {
   methods: {
     getCategory(model) {
       request.getCategory(JSON.stringify(model) == "{}" ? this.pageForm : model).then(res => {
-        console.log(res)
         this.tableData.tableData = res.data.list;
         this.tableData.total = res.data.count;
       })
@@ -131,17 +132,13 @@ export default {
     },
     addSave() {
       if(this.tip === 'add') {
-        console.log(this.form,'新增')
         request.addSave(this.form).then(res => {
-          console.log(res)
           this.getCategory({});
           this.dialog = false;
           this.$commonUtils.setMessage("success", "保存成功");
         })
       } else {
-        console.log(this.form,'编辑')
         request.editSave(this.form).then(res => {
-          console.log(res)
           this.getCategory({});
           this.dialog = false;
           this.$commonUtils.setMessage("success", "编辑成功");
@@ -164,7 +161,6 @@ export default {
         }
       ).then(() => {
         request.delCategory({ id: data.id }).then(res => {
-          console.log(res)
           this.getCategory({})
           this.$commonUtils.setMessage("success", "删除成功");
         })
