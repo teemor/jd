@@ -329,9 +329,11 @@ export default {
       this.editForm.standard = data.standard
       this.editForm.company = data.company
       this.editForm.line= data.line
+      this.editForm.id = data.id
       console.log(data, "ata");
     },
     editItemsData() {
+      console.log(this.editForm,'editform')
       request
         .updateItems({
           projectNumber: this.editForm.projectNumber,

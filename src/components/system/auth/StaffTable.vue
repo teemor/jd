@@ -19,7 +19,7 @@
             clearable
             :props="optionProps"
             ref="cascader"
-          ></el-cascader> -->
+          ></el-cascader>-->
         </el-form-item>
         <el-form-item>
           <el-button size="mini" type="primary" @click="searchUser">查询</el-button>
@@ -337,11 +337,15 @@ export default {
       // });
       this.formInline.page = this.form.page;
       this.formInline.pageSize = this.form.pageSize;
-      request.selectUserModel(this.formInline).then(res => {
-        this.tableData.tableData = res.data.tableData;
-        this.tableData.total = res.data.totalItem;
-        // this.authData = res.data.tableData;
-      });
+      if (this.formInline.user == "" && this.formInline.department == "") {
+        this.selectUser({});
+      } else {
+        request.selectUserModel(this.formInline).then(res => {
+          this.tableData.tableData = res.data.tableData;
+          this.tableData.total = res.data.totalItem;
+          // this.authData = res.data.tableData;
+        });
+      }
     },
     // 添加用户
     addUser: function() {
@@ -416,16 +420,16 @@ export default {
       });
       this.$refs.user.validate(valid => {
         if (valid) {
-         request.updateUser(this.model).then(res => {
-        if (res.data === "update") {
-          this.$commonUtils.setMessage("success", "修改成功");
-          // commit('updisabled', false)
-          this.selectUser({});
-        } else {
-          commonUtils.setMessage("warnning", "修改失败");
-        }
-        this.editDialog = false;
-      });
+          request.updateUser(this.model).then(res => {
+            if (res.data === "update") {
+              this.$commonUtils.setMessage("success", "修改成功");
+              // commit('updisabled', false)
+              this.selectUser({});
+            } else {
+              commonUtils.setMessage("warnning", "修改失败");
+            }
+            this.editDialog = false;
+          });
         } else {
           this.$commonUtils.setMessage("error", "提交错误！请填完整信息");
         }

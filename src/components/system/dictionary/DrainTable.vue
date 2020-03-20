@@ -5,21 +5,24 @@
       <el-button size="mini" type="primary" @click="deleteAllSewage">批量删除</el-button>
     </div>
     <div>
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+      <el-form :inline="true" :model="searchForm" class="demo-form-inline">
         <el-form-item label="工艺段">
-          <el-input size="mini" v-model="formInline.user" placeholder="工艺段"></el-input>
+          <el-input size="mini" v-model="searchForm.process" placeholder="工艺段"></el-input>
         </el-form-item>
         <el-form-item label="名称">
-          <el-input size="mini" v-model="formInline.department" placeholder="名称"></el-input>
+          <el-input size="mini" v-model="searchForm.name" placeholder="名称"></el-input>
         </el-form-item>
         <el-form-item label="编号">
-          <el-input size="mini" v-model="formInline.department" placeholder="编号"></el-input>
+          <el-input size="mini" v-model="searchForm.num" placeholder="编号"></el-input>
         </el-form-item>
         <el-form-item label="部门">
-          <el-input size="mini" v-model="formInline.department" placeholder="所属部门"></el-input>
+          <el-input size="mini" v-model="searchForm.department" placeholder="所属部门"></el-input>
         </el-form-item>
         <el-form-item label="启用">
-          <el-input size="mini" v-model="formInline.department" placeholder="启用"></el-input>
+          <el-select size="mini" v-model="searchForm.state" placeholder="请选择">
+            <el-option size="mini" label="启用" value="0"></el-option>
+            <el-option size="mini" label="停用" value="1"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button size="mini" type="primary" @click="searchUser">查询</el-button>
@@ -407,6 +410,13 @@ export default {
   },
   data() {
     return {
+      searchForm: {
+        process: "",
+        name: "",
+        num: "",
+        department: "",
+        state: ""
+      },
       model: {},
       sysFunction: [
         { id: 8, name: "大气主排口" },
@@ -536,7 +546,7 @@ export default {
           message: "请选择删除的角色!"
         });
       } else {
-        this.$confirm("此操作将永久删除该角色, 是否继续?", "提示", {
+        this.$confirm("此操作将永久删除该排污口, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -565,7 +575,7 @@ export default {
     // 删除
     deleteSewage(data) {
       let id = data.id;
-      this.$confirm("此操作将永久删除该角色, 是否继续?", "提示", {
+      this.$confirm("此操作将永久删除该排污口, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -645,6 +655,11 @@ export default {
             console.log(res, "res");
           });
         } else {
+           if (this.formInline.correlationId.length > 0) {
+            this.formInline.correlationId = this.formInline.correlationId
+              .split(",")
+              .map(Number);
+          }
           this.$commonUtils.setMessage("error", "提交错误！请填完整信息");
         }
       });
@@ -692,23 +707,29 @@ export default {
           data.department = res.data.id;
         });
         data.correlationId = this.editForm.correlationId.join();
-        request.addSewage(data).then(res => {
-          if (res.data === "insert") {
-            this.$message({
-              type: "success",
-              message: "添加成功"
+        this.$refs.Sewage.validate(valid => {
+          if (valid) {
+            request.addSewage(data).then(res => {
+              if (res.data === "insert") {
+                this.$message({
+                  type: "success",
+                  message: "添加成功"
+                });
+                this.SewageEditDialog = false;
+                this.selectSewage({});
+              } else if (res.data === "repeat") {
+                this.editForm.correlationId = this.editForm.correlationId
+                  .split(",")
+                  .map(Number);
+                console.log(this.editForm, "this.corr");
+                this.$message({
+                  type: "info",
+                  message: "重复字段"
+                });
+              }
             });
-            this.SewageEditDialog = false;
-            this.selectSewage({});
-          } else if (res.data === "repeat") {
-            this.editForm.correlationId = this.editForm.correlationId
-              .split(",")
-              .map(Number);
-            console.log(this.editForm, "this.corr");
-            this.$message({
-              type: "info",
-              message: "重复字段"
-            });
+          } else {
+            this.$commonUtils.setMessage("error", "提交错误！请填完整信息");
           }
         });
       } else {
@@ -734,20 +755,25 @@ export default {
         this.model.filingTime = this.editForm.filingTime; //建档时间
         this.model.equipmentDrain = this.editForm.equipmentDrain; // 关联设备
         this.model.correlationId = this.editForm.correlationId.join(); // 关联排污口
-
-        request.updateSewage(this.model).then(res => {
-          if (res.data === "update") {
-            this.$message({
-              type: "success",
-              message: "修改成功"
+        this.$refs.Sewage.validate(valid => {
+          if (valid) {
+            request.updateSewage(this.model).then(res => {
+              if (res.data === "update") {
+                this.$message({
+                  type: "success",
+                  message: "修改成功"
+                });
+                this.SewageEditDialog = false;
+                this.selectSewage({});
+              } else if (res.data === "repeat") {
+                this.$message({
+                  type: "info",
+                  message: "重复字段"
+                });
+              }
             });
-            this.SewageEditDialog = false;
-            this.selectSewage({});
-          } else if (res.data === "repeat") {
-            this.$message({
-              type: "info",
-              message: "重复字段"
-            });
+          } else {
+            this.$commonUtils.setMessage("error", "提交错误！请填完整信息");
           }
         });
       }
