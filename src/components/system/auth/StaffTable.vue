@@ -396,7 +396,7 @@ export default {
     // 修改用户表
     editUser(data) {
       this.editForm.id = data.id;
-      this.editForm.dpid = data.dpid;
+      this.editForm.dpid = data.dp;
       this.editForm.uname = data.uname;
       this.editForm.fname = data.fname;
       this.editForm.pass = data.pass;
