@@ -71,13 +71,6 @@
           <el-form-item label="名称" prop="name">
             <el-input v-model="edit_file_form.name" placeholder="名称" size="mini"></el-input>
           </el-form-item>
-          <el-form-item label="级别" prop="level">
-            <el-select v-model="edit_file_form.level" placeholder="请选择级别" size="mini">
-              <el-option label="一级" value="1"></el-option>
-              <el-option label="二级" value="2"></el-option>
-              <el-option label="三级" value="3"></el-option>
-            </el-select>
-          </el-form-item>
           <el-form-item label="上级档案" prop="spid">
             <el-cascader
               v-model="editfile"
@@ -87,6 +80,13 @@
               ref="cascader"
               clearable
             ></el-cascader>
+          </el-form-item>
+          <el-form-item label="级别" prop="level">
+            <el-select v-model="edit_file_form.level" placeholder="请选择级别" size="mini">
+              <el-option label="一级" value="1"></el-option>
+              <el-option label="二级" value="2"></el-option>
+              <el-option label="三级" value="3"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="编号" prop="num">
             <el-input v-model="edit_file_form.num" placeholder="编号" size="mini"></el-input>
@@ -217,17 +217,22 @@ export default {
       this.$refs['cascader'].getCheckedNodes().map((res) => {
         this.edit_file_form.spid = res.data.id;
       })
-      this.$refs[formName].validate((pass) => {
-        if(pass){
-          request.editSaveFile(this.edit_file_form).then(res => {
-            this.selectAll();
-            this.edit = false;
-            this.$commonUtils.setMessage("success", "修改成功");
-          });
-        } else {
-          this.$commonUtils.setMessage("error", "修改失败");
-        }
-      });
+      if(this.edit_file_form.id === this.edit_file_form.spid) {
+        this.$commonUtils.setMessage("warning", "自身不可选为上级");
+      } else {
+        this.$refs[formName].validate((pass) => {
+          if(pass){
+            request.editSaveFile(this.edit_file_form).then(res => {
+              this.selectAll();
+              this.edit = false;
+              this.$commonUtils.setMessage("success", "修改成功");
+            });
+          } else {
+            this.$commonUtils.setMessage("error", "修改失败");
+          }
+        });
+      }
+      
     },
     // 删除档案级别
     delFile() {
@@ -248,28 +253,29 @@ export default {
               .then(() => {
                 request.deleteFile(this.edit_file_form).then(res => {
                   this.selectAll();
-                  this.del = false;
-                  this.$message({
-                    type: "success",
-                    message: "删除成功!"
-                  });
+                  this.$message({ type: "success", message: "删除成功!" });
+                  this.edit_file_form = { name: '' };
                 });
               })
               .catch(() => {
-                this.$message({
-                  type: "info",
-                  message: "已取消删除"
-                });
+                this.$message({ type: "info", message: "已取消删除" });
               });
           } else {
-            request.deleteFile(this.edit_file_form).then(res => {
-              this.selectAll();
-              this.del = false;
-              this.$message({
-                type: "success",
-                message: "删除成功!"
+            this.$confirm(
+              "此操作将删除该档案级别, 是否继续", '提示', {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+              }
+            ).then(() => {
+              request.deleteFile(this.edit_file_form).then(res => {
+                this.selectAll();
+                this.$message({ type: "success", message: "删除成功!" });
+                this.edit_file_form = { name: '' };
               });
-            });
+            }).catch(() => {
+              this.$message({ type: "info", message: "已取消删除" });
+            })
           }
         });
       }

@@ -286,10 +286,10 @@ export default {
       if (this.idBatch.length == 0) {
         this.$message({
           type: "warning",
-          message: "请选择删除的单位!"
+          message: "请选择删除的工艺段!"
         });
       } else {
-        this.$confirm('此操作将删除该检测单位, 是否继续?', '提示', {
+        this.$confirm('此操作将删除该工艺段, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
