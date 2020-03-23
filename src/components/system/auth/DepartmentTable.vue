@@ -234,20 +234,27 @@ export default {
         this.$refs["cascader"].getCheckedNodes().map(res => {
           this.editInline.spid = res.data.id;
         });
-        if (valid) {
-          request.updatedp(this.editInline).then(res => {
-            this.selectDep({});
-            this.selectDepId(0);
-            this.selectDpTree();
-            this.edit = 0;
-            if (res.data === "repeat") {
-              this.$commonUtils.setMessage("error", "重复字段");
-            } else {
-              this.$commonUtils.setMessage("success", "修改成功");
-            }
-          });
+        if (this.editInline.spid === this.editInline.id) {
+          this.$commonUtils.setMessage(
+            "error",
+            "不能选择自身为上级,请重新选择！"
+          );
         } else {
-          this.$commonUtils.setMessage("error", "提交错误！请填完整信息");
+          if (valid) {
+            request.updatedp(this.editInline).then(res => {
+              this.selectDep({});
+              this.selectDepId(0);
+              this.selectDpTree();
+              this.edit = 0;
+              if (res.data === "repeat") {
+                this.$commonUtils.setMessage("error", "重复字段");
+              } else {
+                this.$commonUtils.setMessage("success", "修改成功");
+              }
+            });
+          } else {
+            this.$commonUtils.setMessage("error", "提交错误！请填完整信息");
+          }
         }
       });
     },

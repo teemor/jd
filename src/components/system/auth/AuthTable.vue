@@ -54,30 +54,14 @@
     </div>
     <div>
       <!-- 修改 -->
-      <el-dialog title="修改权限" :visible.sync="authEditDialog">
-        <el-form
-          :inline="true"
-          :model="editForm"
-          class="demo-form-inline"
-          :rules="rules"
-          ref="form"
-        >
-          <el-form-item label="角色" prop="name">
-            <el-input size="mini" v-model="editForm.name" placeholder="角色"></el-input>
-          </el-form-item>
-          <el-form-item label="备注" prop="remarks">
-            <el-input size="mini" v-model="editForm.remarks" placeholder="备注"></el-input>
-          </el-form-item>
-        </el-form>
-        <el-tree
-          ref="editTree"
-          :data="authTree"
-          :default-checked-keys="editForm.groups"
-          show-checkbox
-          node-key="id"
-        ></el-tree>
-        <el-button size="mini" type="primary" @click="editAuthData">保存</el-button>
-      </el-dialog>
+      <grace-dialog
+        :editForm="editForm"
+        :authTree="authTree"
+        dialog:title="修改权限"
+        @edit-auth="editAuthData"
+        :dialog:visible.sync="authEditDialog"
+        dialog:is="edit-auth"
+      ></grace-dialog>
     </div>
   </div>
 </template>
@@ -230,27 +214,8 @@ export default {
       this.editForm.groups = data.groups.split(",");
     },
     editAuthData() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          let groups = this.$refs.editTree.getCheckedNodes().map(item => {
-            return item.id;
-          });
-          // console.log(this.editForm.groups,'this.editForm.groups')
-          request
-            .updateAuth({
-              id: this.editForm.id,
-              name: this.editForm.name,
-              remarks: this.editForm.remarks,
-              groups: groups.join()
-            })
-            .then(res => {
-              this.selectAuth({});
-              this.authEditDialog = false;
-            });
-        } else {
-          this.$commonUtils.setMessage("error", "提交错误！请填完整信息");
-        }
-      });
+      this.selectAuth({});
+      this.authEditDialog = false;
     },
     Data() {
       this.authDialog = true;
@@ -264,10 +229,7 @@ export default {
       request
         .selectAuth(JSON.stringify(model) == "{}" ? this.form : model)
         .then(res => {
-          if (
-            res.data.tableData.length === 0 &&
-            res.data.totalItem !== 0
-          ) {
+          if (res.data.tableData.length === 0 && res.data.totalItem !== 0) {
             this.selectAuth({ page: 1, pageSize: 10 });
           }
           this.tableData.tableData = res.data.tableData;
