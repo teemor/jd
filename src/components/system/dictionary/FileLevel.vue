@@ -138,7 +138,8 @@ export default {
       },
       rules: {
         name: [{ required: true, message: "请输入档案名称", trigger: "blur" }],
-        num: [{ required: true, message: "请输入档案编号", trigger: "blur" }]
+        num: [{ required: true, message: "请输入档案编号", trigger: "blur" }],
+        level: [{ required: true, message: "请选择级别", trigger: "blur" }],
       },
       filterText: ""
     };
@@ -178,6 +179,7 @@ export default {
       this.edit_file_form.num = data.num;
       this.edit_file_form.state = data.state;
       this.edit_file_form.id = data.id;
+      this.edit_file_form.spid = data.spid;
       this.editfile = data.spid;
     },
     // 新增档案级别
