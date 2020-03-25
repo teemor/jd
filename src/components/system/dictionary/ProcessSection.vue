@@ -214,7 +214,11 @@ export default {
     },
     // 修改工艺段
     editTech(data) {  
-      this.edit_tech_form = data;
+      this.edit_tech_form.name = data.name;
+      this.edit_tech_form.id = data.id;
+      this.edit_tech_form.sort = data.sort;
+      this.edit_tech_form.code = data.code;
+      this.edit_tech_form.state = data.state;
       this.editDialog = true;
     },
     editSaveTech(formName) {

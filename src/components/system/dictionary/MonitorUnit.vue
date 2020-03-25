@@ -241,7 +241,12 @@ export default {
     },
     // 修改检测单位
     editUnit(data) {
-      this.edit_unit_form = data;
+      this.edit_unit_form.id = data.id;
+      this.edit_unit_form.name = data.name;
+      this.edit_unit_form.photo = data.photo;
+      this.edit_unit_form.contact = data.contact;
+      this.edit_unit_form.type = data.type;
+      this.edit_unit_form.state = data.state;
       this.editDialog = true;
     },
     editSaveUnit(formName) {
