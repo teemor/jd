@@ -6,7 +6,20 @@ import report from "@/api/system/report";
 import platform from "@/api/file/platform";
 export default {
     data() {
+        var checkInt = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('不能为空'));
+            }
+            setTimeout(() => {
+                if (!Number.isInteger(value)) {
+                    callback(new Error('请输入数字值'));
+                } else {
+                    callback();
+                }
+            }, 1000);
+        };
         return {
+            checkInt,
             optionProps: { label: "name", value: "id", key: "id" },
             fileDataOptions: [], // 档案级别联动
             fileDpOptions: [],//部门级别联动
@@ -24,8 +37,9 @@ export default {
                 reportid: [{ required: true, message: "请输入关联报表", trigger: "blur" }],
                 platformid: [{ required: true, message: "请输入关联平台", trigger: "blur" }],
                 archivesid: [{ required: true, message: "请输入关联档案", trigger: "blur" }],
-                cycle: [{ required: true, message: "请输入上报周期", trigger: "blur" }, { type: 'number', message: '必须为数字值' }],
-                expect: [{ required: true, message: "请输入报警预期", trigger: "blur" }, { type: 'number', message: '必须为数字值' }],
+                cycle: [{ validator: checkInt, trigger: "blur" }],
+                expect:[{ validator: checkInt, trigger: "blur" }],
+                // expect: [{ required: true, message: "请输入报警预期", trigger: "blur" }, { type: 'number', message: '必须为数字值' }],
                 person: [{ required: true, message: "请输入负责人", trigger: "blur" }],
             },
             dic_rules: {

@@ -71,7 +71,7 @@
             <el-input size="mini" v-model="editInline.code" placeholder="部门编码"></el-input>
           </el-form-item>
           <el-form-item label="排序码" prop="level">
-            <el-input size="mini" v-model="editInline.level" placeholder="部门编码"></el-input>
+            <el-input size="mini" v-model.number="editInline.level" placeholder="部门编码"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button class="fr" size="mini" type="primary" @click="editDep">保存</el-button>
@@ -88,6 +88,18 @@ import request from "@/api/system/department";
 export default {
   mixins: [dictonary],
   data() {
+    var checkInt = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("请输入排序码"));
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error("排序码用数字嗷"));
+        } else {
+          callback();
+        }
+      }, 1000);
+    };
     return {
       Sdp: 0,
       first: "",
@@ -97,13 +109,7 @@ export default {
         code: [{ required: true, message: "请输入部门编码", trigger: "blur" }],
         level: [
           {
-            required: true,
-            message: "请输入排序码",
-            trigger: "blur"
-          },
-          {
-            type: "number",
-            message: "排序码用数字",
+            validator: checkInt,
             trigger: "blur"
           }
         ]
@@ -234,6 +240,9 @@ export default {
         this.$refs["cascader"].getCheckedNodes().map(res => {
           this.editInline.spid = res.data.id;
         });
+        if (this.editInline.spid.length == 0) {
+          this.editInline.spid = 0;
+        }
         if (this.editInline.spid === this.editInline.id) {
           this.$commonUtils.setMessage(
             "error",

@@ -682,6 +682,7 @@ export default {
       this.editForm.deviceId = data.deviceId; // 设备编号
       this.editForm.warehouse = data.warehouse; // 数据仓编号
       this.editForm.department = data.departmentid; //运维部门
+      console.log(this.editForm.department,'hehehehhebumen')
       this.editForm.process = data.processid; //工艺段
       this.editForm.state = data.stateid; //运行状态
       this.editForm.company = data.companyid; // 检测单位

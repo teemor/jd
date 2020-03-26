@@ -396,13 +396,14 @@ export default {
     // 修改用户表
     editUser(data) {
       this.editForm.id = data.id;
-      this.editForm.dpid = data.dp;
+      this.editForm.dpid = data.dpid;
       this.editForm.uname = data.uname;
       this.editForm.fname = data.fname;
       this.editForm.pass = data.pass;
       this.editForm.phone = data.phone;
       this.editForm.state = data.state;
       this.editForm.powerid = data.powerid;
+      console.log(this.editForm.dpid, "部门dpid");
       this.editDialog = true;
     },
     editSaveUser() {
